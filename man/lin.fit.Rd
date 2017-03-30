@@ -50,4 +50,3 @@ plot(C ~ t)
 curve({fit$f0/0.3 * x + fit$C0}, from = 0, to = 1, add = TRUE)
 
 }
-

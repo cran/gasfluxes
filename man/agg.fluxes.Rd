@@ -37,4 +37,3 @@ fluxes <- rlnorm(20, 5)
 agg.fluxes(fluxes, datetimes)
 
 }
-

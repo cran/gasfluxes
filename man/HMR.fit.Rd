@@ -95,4 +95,3 @@ boxplot(fluxes[f0.se < 1e4, sqrt(f0.se)])
 \references{
 Pedersen, A.R., Petersen, S.O., Schelde, K., 2010. A comprehensive approach to soil-atmosphere trace-gas flux estimation with static chambers. European Journal of Soil Science 61(6), 888-902.
 }
-

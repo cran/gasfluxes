@@ -15,4 +15,3 @@ A numeric vector, i.e., the erfc values.
 \description{
 This is the complementary error function.
 }
-

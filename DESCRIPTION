@@ -1,11 +1,11 @@
 Package: gasfluxes
 Type: Package
 Title: Greenhouse Gas Flux Calculation from Chamber Measurements
-Version: 0.2
-Date: 2016-12-23
+Version: 0.2-1
+Date: 2017-03-17
 Authors@R: c(person("Roland", "Fuss", role = c("aut", "cre"),
          email = "roland.fuss@thuenen.de"),
-         person("Asger R.", "Pedersen", role = "ctb",
+         person("Asger R.", "Pedersen", role = "cph",
          comment = "for code copied from the not-exported HMR:::.HMR.fit1 function (version 0.3.1)")
          )
 Maintainer: Roland Fuss <roland.fuss@thuenen.de>
@@ -17,11 +17,11 @@ Depends: R (>= 3.1.2)
 Imports: sfsmisc (>= 1.0), data.table (>= 1.9.4), MASS (>= 7.3),
         AICcmodavg (>= 2.0), stats, graphics, grDevices
 Suggests: testthat
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2016-12-23 12:18:09 UTC; fuss
+Packaged: 2017-03-30 11:33:57 UTC; fuss
 Author: Roland Fuss [aut, cre],
-  Asger R. Pedersen [ctb] (for code copied from the not-exported
+  Asger R. Pedersen [cph] (for code copied from the not-exported
     HMR:::.HMR.fit1 function (version 0.3.1))
 Repository: CRAN
-Date/Publication: 2016-12-23 18:04:01
+Date/Publication: 2017-03-30 15:42:11 UTC

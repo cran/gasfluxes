@@ -132,4 +132,3 @@ fluxMeas[serie \%in\% c("ID555", "ID556", "ID557")]
 } 
 
 }
-

@@ -161,7 +161,7 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
   
   
   res <- dat[, {
-    .ID <- paste(mget(.id), collapse = "_")[1]
+    .ID <- do.call(paste, c(mget(.id), sep = "_"))[1]
     #plot for each ID
     if (plot) {
       png(filename = paste0(paste(file.path(mainDir, subDir), .ID, sep = "/"), ".png"),

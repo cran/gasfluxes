@@ -55,11 +55,10 @@ curve({fit$phi + fit$f0 * exp(-fit$kappa * x)/(-fit$kappa*0.3)},
       from = 0, to = 1, add = TRUE)
 
 }
+\references{
+Pedersen, A.R., Petersen, S.O., Schelde, K., 2010. A comprehensive approach to soil-atmosphere trace-gas flux estimation with static chambers. European Journal of Soil Science 61(6), 888-902.
+}
 \author{
 Asger R. Pedersen for code copied from the not-exported HMR:::.HMR.fit1 function,
 Roland Fuss
 }
-\references{
-Pedersen, A.R., Petersen, S.O., Schelde, K., 2010. A comprehensive approach to soil-atmosphere trace-gas flux estimation with static chambers. European Journal of Soil Science 61(6), 888-902.
-}
-

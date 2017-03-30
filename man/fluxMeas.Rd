@@ -17,4 +17,3 @@ own data (anonymized by not including site and treatment information)
 \description{
 A dataset containing data from 1329 chamber N2O flux measurements.
 }
-

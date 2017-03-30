@@ -19,4 +19,3 @@ The wrapper function for convenient flux calculation is
 \item \code{\link{rlin.fit}}: A simple linear model fit using robust regression.
 }
 }
-
