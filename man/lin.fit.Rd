@@ -4,7 +4,8 @@
 \alias{lin.fit}
 \title{Linear concentration - time model}
 \usage{
-lin.fit(t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, ...)
+lin.fit(t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE,
+  ...)
 }
 \arguments{
 \item{t}{time values (usually in hours)}
@@ -32,6 +33,7 @@ A list of
    \item{AIC}{Akaike information criterion} 
    \item{AICc}{Akaike information criterion with small sample correction}
    \item{RSE}{residual standard error (sigma from summary.nls)}
+   \item{r}{Pearson's correlation coefficient}
    \item{diagnostics}{error or warning messages}
 }
 \description{

@@ -7,8 +7,8 @@ test_that("linear regression gives expected result", {
   fit <- lin.fit(t, C, 1, 0.3, "a", verbose = FALSE)
   expect_equal(fit, structure(list(f0 = 11.52, f0.se = 2.02849698052524, f0.p = 0.0296345042190038, 
                                    C0 = 323.8, AIC = 27.5179162394956, AICc = Inf, RSE = 5.03984126734168, 
-                                   diagnostics = ""), .Names = c("f0", "f0.se", "f0.p", "C0", 
-                                                                 "AIC", "AICc", "RSE", "diagnostics")))
+                                   r = 0.970365495780996, diagnostics = ""), 
+                              .Names = c("f0", "f0.se", "f0.p", "C0", "AIC", "AICc", "RSE", "r","diagnostics")), tolerance = 1e-5)
   
   C <- 320 + 0:3 * 10
   expect_warning(fit <- lin.fit(t, C, 1, 0.3, "a", verbose = FALSE), regexp = "essentially perfect fit", fixed = TRUE)
@@ -23,13 +23,13 @@ test_that("robust linear regression gives expected result", {
   fit <- rlin.fit(t, C, 1, 0.3, "a", verbose = FALSE)
   expect_equal(fit, structure(list(f0 = 11.52, f0.se = 2.02849698052524, f0.p = 0.0296345042190038, 
                                    C0 = 323.8, weights = c(1, 1, 1, 1), diagnostics = ""), 
-                              .Names = c("f0", "f0.se", "f0.p", "C0", "weights", "diagnostics")))
+                              .Names = c("f0", "f0.se", "f0.p", "C0", "weights", "diagnostics")), tolerance = 1e-5)
   C[2] <- 400
   fit <- rlin.fit(t, C, 1, 0.3, "a", verbose = FALSE)
   expect_equal(fit, structure(list(f0 = 10.3651999807438, f0.se = 7.74617801784988, 
                                    f0.p = 0.283145377159807, C0 = 328.932444530028, 
                                    weights = c(1, 0.224712479154538, 1, 1), diagnostics = ""), 
-                              .Names = c("f0", "f0.se", "f0.p", "C0", "weights", "diagnostics")))
+                              .Names = c("f0", "f0.se", "f0.p", "C0", "weights", "diagnostics")), tolerance = 1e-5)
   
   C <- 320 + 0:3 * 10
   fit <- rlin.fit(t, C, 1, 0.3, "a", verbose = FALSE)
@@ -104,7 +104,7 @@ test_that("NDFE regression gives expected result", {
                                    f0.p = 0.333927030887926, tau = 0.0111016600093449, C0 = 319.992148880558, 
                                    AIC = 10.7342239838649, AICc = -29.2657760161351, RSE = 0.681122330960559, 
                                    diagnostics = ""), .Names = c("f0", "f0.se", "f0.p", "tau", 
-                                                                 "C0", "AIC", "AICc", "RSE", "diagnostics")))
+                                                                 "C0", "AIC", "AICc", "RSE", "diagnostics")), tolerance = 1e-5)
   
   C[2] <- 400
   fit <- NDFE.fit(t, C, 1, 0.3, "a", verbose = FALSE)

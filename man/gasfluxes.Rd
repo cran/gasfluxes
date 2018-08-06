@@ -6,8 +6,8 @@
 \usage{
 gasfluxes(dat, .id = "ID", .V = "V", .A = "A", .times = "time",
   .C = "C", methods = c("linear", "robust linear", "HMR", "NDFE"),
-  select = NULL, k_HMR = log(1.5), k_NDFE = log(0.01), verbose = TRUE,
-  plot = TRUE, ...)
+  k_HMR = log(1.5), k_NDFE = log(0.01), verbose = TRUE,
+  plot = TRUE, select, maxiter = 100, ...)
 }
 \arguments{
 \item{dat}{a data.frame or data.table with data from flux measurements.}
@@ -24,8 +24,6 @@ gasfluxes(dat, .id = "ID", .V = "V", .A = "A", .times = "time",
 
 \item{methods}{character; which methods to use for flux estimation. See details for available methods.}
 
-\item{select}{character; specify a ruleset for selection of the final flux value, use NULL for no selection.}
-
 \item{k_HMR}{starting value for \code{\link{HMR.fit}}.}
 
 \item{k_NDFE}{starting value for \code{\link{NDFE.fit}}.}
@@ -33,6 +31,10 @@ gasfluxes(dat, .id = "ID", .V = "V", .A = "A", .times = "time",
 \item{verbose}{logical; print progress messages?}
 
 \item{plot}{create plots if TRUE (the default). The IDs are used as file names and should thus not include characters that are not allowed in file names, such as \code{/} or \code{=}. A directory "pics"  is created in the working directory if it doesn't exist. The plots are only intended to facilitate quick checking, not for publication quality graphs.}
+
+\item{select}{deprecated; please use function \code{\link{selectfluxes}}.}
+
+\item{maxiter}{see \code{\link{nls.control}}}
 
 \item{\dots}{further parameters}
 }
@@ -56,19 +58,6 @@ Specifying other methods results in an error.
 
 The default starting values for "HMR" and "NDFE", \eqn{k = log(\kappa)} and \eqn{k = log(\tau)}, resp., assume that time is in hours. If you use a different time unit, you should adjust them accordingly.
 Note that \code{nls} is used internally by these functions and thus they should not be used with artificial "zero-residual" data.
-
-Available selection algorithms currently are
-\describe{
-\item{"RF2011"}{The algorithm used, e.g., in Leiber-Sauheitl 2014 (doi:10.5194/bg-11-749-2014).
-This overwrites the methods parameter. The factor guarding against degenerate HMR fits
-can be set via the ellipsis as \code{gfactor}. Default is \code{gfactor = 4}.}
-\item{"RF2011new"}{The same rules as "RF2011", but using the improved fitting function for HMR,
-which results in larger SE and p-values. Thus, it is less likely to select the HMR result.
-This selection algorithm might need further testing and validation.}
-}
-
-Other selection algorithms could be implemented, but selection can always be done as a postprocessing step. E.g., if many data points are available for each flux measurement it is probably most sensible to use AICc.
-
 
 The input data.frame or data.table should be in the following format:
 
@@ -131,4 +120,7 @@ fluxMeas[serie \%in\% c("ID555", "ID556", "ID557")]
 # investigate and fix
 } 
 
+}
+\seealso{
+\code{\link{selectfluxes}} for flux selection
 }

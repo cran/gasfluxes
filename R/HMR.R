@@ -11,6 +11,7 @@
 #' @param k starting value for nls function
 #' @param verbose logical, TRUE prints message after each flux calculation
 #' @param plot logical, mainly intended for use in \code{\link{gasfluxes}}
+#' @param maxiter see \code{\link{nls.control}}
 #' @param \dots further parameters, currently none
 #'  
 #' @return
@@ -85,13 +86,13 @@
 #' @importFrom graphics curve 
 #' @export
 
-HMR.fit <- function (t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE, plot = FALSE, ...) {
+HMR.fit <- function (t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE, plot = FALSE, maxiter = 100, ...) {
 
   tryCatch({
     stopifnot(length(t) > 3)
     fit <- nls(C ~ cbind(1, exp(-exp(k)*t)/(-exp(k)*V/A)), 
                start= list(k=k), algorithm = "plinear",
-               control=nls.control(maxiter=100, minFactor=1e-10))
+               control=nls.control(maxiter=maxiter, minFactor=1e-10))
     fitsum <- summary(fit)
     fitsumCoef <- fitsum$coef
     try({

@@ -5,7 +5,7 @@
 \title{HMR fit}
 \usage{
 HMR.fit(t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE,
-  plot = FALSE, ...)
+  plot = FALSE, maxiter = 100, ...)
 }
 \arguments{
 \item{t}{time values (usually in hours)}
@@ -23,6 +23,8 @@ HMR.fit(t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE,
 \item{verbose}{logical, TRUE prints message after each flux calculation}
 
 \item{plot}{logical, mainly intended for use in \code{\link{gasfluxes}}}
+
+\item{maxiter}{see \code{\link{nls.control}}}
 
 \item{\dots}{further parameters, currently none}
 }

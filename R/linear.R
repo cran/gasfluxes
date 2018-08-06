@@ -20,6 +20,7 @@
 #'    \item{AIC}{Akaike information criterion} 
 #'    \item{AICc}{Akaike information criterion with small sample correction}
 #'    \item{RSE}{residual standard error (sigma from summary.nls)}
+#'    \item{r}{Pearson's correlation coefficient}
 #'    \item{diagnostics}{error or warning messages}
 #'    
 #' @details
@@ -35,7 +36,7 @@
 #' curve({fit$f0/0.3 * x + fit$C0}, from = 0, to = 1, add = TRUE)
 #' 
 #' @importFrom AICcmodavg AICc
-#' @importFrom stats lm predict AIC
+#' @importFrom stats lm predict AIC cor
 #' @importFrom graphics lines
 #' @export
 
@@ -44,6 +45,7 @@ lin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, .
   tryCatch({
     stopifnot(length(t) > 2)
     fit <- lm(C ~ t)
+    r <- cor(C, t)
     fitsum <- summary(fit)
     fitsumCoef <- fitsum$coef
     try({
@@ -57,9 +59,10 @@ lin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, .
       f0.se = fitsumCoef["t", "Std. Error"] * V/A, 
       f0.p = fitsumCoef["t", "Pr(>|t|)"], 
       C0 = fitsumCoef["(Intercept)", "Estimate"],
-      AIC=AIC(fit),
-      AICc=AICc(fit),
-      RSE=fitsum$sigma,
+      AIC = AIC(fit),
+      AICc = AICc(fit),
+      RSE = fitsum$sigma,
+      r = r,
       diagnostics = "")
     if (verbose) message(serie, ": linear fit successful")
     res
@@ -70,10 +73,11 @@ lin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, .
       f0 = NA_real_, 
       f0.se = NA_real_, 
       f0.p = NA_real_, 
-      C0=NA_real_,
-      AIC=NA_real_,
-      AICc=NA_real_,
-      RSE=NA_real_,
+      C0 = NA_real_,
+      AIC = NA_real_,
+      AICc = NA_real_,
+      RSE = NA_real_,
+      r = NA_real_,
       diagnostics=cond$message)
   },
   warning = function(cond) {
@@ -92,6 +96,7 @@ lin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, .
       AIC=AIC(fit),
       AICc=AICc(fit),
       RSE=fitsum$sigma,
+      r = r,
       diagnostics = cond$message)
     if (verbose) message(serie, ": linear fit successful (warning)")
     res

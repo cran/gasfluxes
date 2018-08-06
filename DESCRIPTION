@@ -1,10 +1,11 @@
 Package: gasfluxes
 Type: Package
 Title: Greenhouse Gas Flux Calculation from Chamber Measurements
-Version: 0.2-1
-Date: 2017-03-17
+Version: 0.4
+Date: 2018-08-04
 Authors@R: c(person("Roland", "Fuss", role = c("aut", "cre"),
          email = "roland.fuss@thuenen.de"),
+         person("Roman", "Hueppi", role = c("ctb")),
          person("Asger R.", "Pedersen", role = "cph",
          comment = "for code copied from the not-exported HMR:::.HMR.fit1 function (version 0.3.1)")
          )
@@ -13,15 +14,18 @@ BugReports: https://bitbucket.org/ecoRoland/gasfluxes/issues
 Description: Functions for greenhouse gas flux calculation from chamber
     measurements.
 License: GPL (>= 2)
-Depends: R (>= 3.1.2)
+Depends: R (>= 3.5.0)
 Imports: sfsmisc (>= 1.0), data.table (>= 1.9.4), MASS (>= 7.3),
         AICcmodavg (>= 2.0), stats, graphics, grDevices
-Suggests: testthat
-RoxygenNote: 6.0.1
+Suggests: testthat, knitr, rmarkdown
+LazyData: true
+VignetteBuilder: knitr, rmarkdown
+RoxygenNote: 6.1.0
 NeedsCompilation: no
-Packaged: 2017-03-30 11:33:57 UTC; fuss
+Packaged: 2018-08-06 10:17:48 UTC; fuss
 Author: Roland Fuss [aut, cre],
+  Roman Hueppi [ctb],
   Asger R. Pedersen [cph] (for code copied from the not-exported
     HMR:::.HMR.fit1 function (version 0.3.1))
 Repository: CRAN
-Date/Publication: 2017-03-30 15:42:11 UTC
+Date/Publication: 2018-08-06 13:00:09 UTC
