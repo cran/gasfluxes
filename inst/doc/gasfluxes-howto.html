@@ -19,7 +19,7 @@
 
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
+<style type="text/css" data-origin="pandoc">
 div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -55,7 +55,29 @@ code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+
 </style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -95,7 +117,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="co">#adjust path (see help(&quot;setwd&quot;)) and file name as appropriate</span>
 fluxMeas &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="st">&quot;fluxmeas.csv&quot;</span>) 
 <span class="co">#here we use two flux measurements from the file as an example</span>
-fluxMeas &lt;-<span class="st"> </span>fluxMeas[ID %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ID6&quot;</span>,<span class="st">&quot;ID11&quot;</span>)]
+fluxMeas &lt;-<span class="st"> </span>fluxMeas[ID <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ID6&quot;</span>,<span class="st">&quot;ID11&quot;</span>)]
 
 fluxMeas
 <span class="co">#&gt;      ID        V A      time         C</span>
@@ -140,8 +162,8 @@ flux.results
 <span class="co">#&gt; 1:         0.002805431       0.0006741157        0.3232908</span>
 <span class="co">#&gt; 2:         0.019206850       0.0272319550        0.3525107</span>
 <span class="co">#&gt;    robust.linear.weights robust.linear.diagnostics    HMR.f0  HMR.f0.se</span>
-<span class="co">#&gt; 1:           1,1,0.033,1                                  NA         NA</span>
-<span class="co">#&gt; 2:               1,1,1,1                           0.2332109 0.01194176</span>
+<span class="co">#&gt; 1:           1|1|0.033|1                                  NA         NA</span>
+<span class="co">#&gt; 2:               1|1|1|1                           0.2332109 0.01194176</span>
 <span class="co">#&gt;      HMR.f0.p HMR.kappa   HMR.phi   HMR.AIC  HMR.AICc     HMR.RSE</span>
 <span class="co">#&gt; 1:         NA        NA        NA        NA        NA          NA</span>
 <span class="co">#&gt; 2: 0.03257022  1.628402 0.5938318 -33.15832 -73.15832 0.002821234</span>
@@ -182,8 +204,8 @@ flux.results
 <span class="co">#&gt; 1:         0.002805431       0.0006741157        0.3232908</span>
 <span class="co">#&gt; 2:         0.019206850       0.0272319550        0.3525107</span>
 <span class="co">#&gt;    robust.linear.weights robust.linear.diagnostics    HMR.f0  HMR.f0.se</span>
-<span class="co">#&gt; 1:           1,1,0.033,1                                  NA         NA</span>
-<span class="co">#&gt; 2:               1,1,1,1                           0.2332109 0.01194176</span>
+<span class="co">#&gt; 1:           1|1|0.033|1                                  NA         NA</span>
+<span class="co">#&gt; 2:               1|1|1|1                           0.2332109 0.01194176</span>
 <span class="co">#&gt;      HMR.f0.p HMR.kappa   HMR.phi   HMR.AIC  HMR.AICc     HMR.RSE</span>
 <span class="co">#&gt; 1:         NA        NA        NA        NA        NA          NA</span>
 <span class="co">#&gt; 2: 0.03257022  1.628402 0.5938318 -33.15832 -73.15832 0.002821234</span>
@@ -193,7 +215,7 @@ flux.results
 <span class="co">#&gt;          flux     flux.se       flux.p        method</span>
 <span class="co">#&gt; 1: 0.09719292 0.002805431 0.0006741157 robust linear</span>
 <span class="co">#&gt; 2: 0.23321086 0.011941763 0.0325702157           HMR</span>
-flux.results[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">26</span>:<span class="dv">30</span>)]
+flux.results[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">26</span><span class="op">:</span><span class="dv">30</span>)]
 <span class="co">#&gt;      ID kappa.max       flux     flux.se       flux.p        method</span>
 <span class="co">#&gt; 1:  ID6  2.724784 0.09719292 0.002805431 0.0006741157 robust linear</span>
 <span class="co">#&gt; 2: ID11  3.677404 0.23321086 0.011941763 0.0325702157           HMR</span></code></pre></div>
@@ -207,18 +229,18 @@ GC.sd &lt;-<span class="st"> </span><span class="dv">5</span> <span class="co">#
 <span class="co">#create simulated concentrations corresponding to flux measurements with zero fluxes:</span>
 <span class="kw">set.seed</span>(<span class="dv">42</span>)
 sim &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">t =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">4</span>), <span class="dt">C =</span> <span class="kw">rnorm</span>(<span class="fl">4e3</span>, <span class="dt">mean =</span> C0, <span class="dt">sd =</span> GC.sd),
-                  <span class="dt">id =</span> <span class="kw">rep</span>(<span class="dv">1</span>:<span class="fl">1e3</span>, <span class="dt">each =</span> <span class="dv">4</span>), <span class="dt">A =</span> <span class="dv">1</span>, <span class="dt">V =</span> <span class="fl">0.535125</span>)   <span class="co"># specify your sampling scheme t (here in [h]) and chamber volume (V) and area (A)</span>
+                  <span class="dt">id =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="fl">1e3</span>, <span class="dt">each =</span> <span class="dv">4</span>), <span class="dt">A =</span> <span class="dv">1</span>, <span class="dt">V =</span> <span class="fl">0.535125</span>)   <span class="co"># specify your sampling scheme t (here in [h]) and chamber volume (V) and area (A)</span>
 <span class="co">#fit HMR model:                  </span>
 simflux &lt;-<span class="st"> </span><span class="kw">gasfluxes</span>(sim, <span class="dt">.id =</span> <span class="st">&quot;id&quot;</span>, <span class="dt">.times =</span> <span class="st">&quot;t&quot;</span>, <span class="dt">methods =</span> <span class="kw">c</span>(<span class="st">&quot;HMR&quot;</span>, <span class="st">&quot;linear&quot;</span>), <span class="dt">plot =</span> <span class="ot">FALSE</span>, <span class="dt">verbose =</span> F) 
-simflux[, f0 :<span class="er">=</span><span class="st"> </span>HMR.f0]
-simflux[<span class="kw">is.na</span>(f0), f0 :<span class="er">=</span><span class="st"> </span>linear.f0] <span class="co"># use linear estimates where HMR could not be fitted</span>
+simflux[, f0 <span class="op">:</span><span class="er">=</span><span class="st"> </span>HMR.f0]
+simflux[<span class="kw">is.na</span>(f0), f0 <span class="op">:</span><span class="er">=</span><span class="st"> </span>linear.f0] <span class="co"># use linear estimates where HMR could not be fitted</span>
 <span class="co">#dection limit as 97.5 % quantile (95 % confidence):</span>
 f.detect &lt;-<span class="st"> </span>simflux[, <span class="kw">quantile</span>(f0, <span class="fl">0.975</span>)]
 f.detect <span class="co"># here in [ppm/h/m^2], use same unit as your flux estimates, </span>
 <span class="co">#&gt;    97.5% </span>
 <span class="co">#&gt; 26.56337</span>
 <span class="co">#e.g., convert to mass flux assuming chamber temperature of 15 °C and standard air pressure</span>
-f.detect /<span class="st"> </span><span class="dv">1000</span> *<span class="st"> </span><span class="dv">28</span> *<span class="st"> </span><span class="fl">273.15</span> /<span class="st"> </span><span class="fl">22.4</span> /<span class="st"> </span>(<span class="fl">273.15</span> +<span class="st"> </span><span class="dv">15</span>)
+f.detect <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> <span class="op">*</span><span class="st"> </span><span class="dv">28</span> <span class="op">*</span><span class="st"> </span><span class="fl">273.15</span> <span class="op">/</span><span class="st"> </span><span class="fl">22.4</span> <span class="op">/</span><span class="st"> </span>(<span class="fl">273.15</span> <span class="op">+</span><span class="st"> </span><span class="dv">15</span>)
 <span class="co">#&gt;      97.5% </span>
 <span class="co">#&gt; 0.03147573</span></code></pre></div>
 </div>

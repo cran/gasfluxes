@@ -131,7 +131,7 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
   funs <- list("linear" = lin.fit,
                "robust linear" = function(...) {
                  res <- rlin.fit(...)
-                 res[["weights"]] <- paste(signif(res[["weights"]], 2), collapse=",")
+                 res[["weights"]] <- paste(signif(res[["weights"]], 2), collapse="|")
                  res
                },
                "HMR" = function(...) HMR.fit(..., k = k_HMR, maxiter = maxiter),

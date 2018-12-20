@@ -1,3 +1,9 @@
+### Changes in v0.4-1
+
+#### Minor changes
+1. Weights from robust linear regression are now separated by "|" insteaf of "," to better accomodate international users, [#12](https://bitbucket.org/ecoRoland/gasfluxes/issues/12/robustlinearweights-output-messes-up-comma)
+
+
 ### Changes in v0.4
 
 #### NEW FEATURES

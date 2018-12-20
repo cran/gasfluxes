@@ -4,7 +4,7 @@ author: "Roman Hüppi, Roland Fuß"
 date: "2018-08-04"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Introduction to gasfluxes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
