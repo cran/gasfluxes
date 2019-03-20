@@ -366,7 +366,8 @@ selectfluxes <- function(dat, select, f.detect = NULL, t.meas = NULL, ...) {
                                                                            "linear")]
     dat[method == "robust linear" & 
           is.finite(HMR.f0) &
-          (HMR.kappa < kappa.max), 
+          (HMR.kappa < kappa.max) & 
+          !(abs(HMR.f0.se/HMR.f0) > 1e10 & abs((linear.f0 - HMR.f0)/HMR.f0) < 1e-5), #protect against linear HMR fit 
         c("flux", "flux.se", "flux.p", "method") := list(HMR.f0,
                                                          HMR.f0.se,
                                                          HMR.f0.p,

@@ -194,4 +194,29 @@ test_that("selection returns expected values with kappa.max", {
 }
 )
 
+test_that("selectfluxes handles 'linear' HMR fit correctly", {
+  skip_on_cran() 
+  library(data.table)
+  DT <- fread("Datum;Uhrzeit;Verschlusszeit;Standort;Plot;T Haube innen Anfang [°C];h_eff;N2O
+            05.03.2019;15:48;0;2;D;6.1;0.344833333;323.76
+            05.03.2019;16:08;0.3333;2;D;6.3;0.344833333;349.44
+            05.03.2019;16:28;0.6667;2;D;6;0.344833333;344.74
+            05.03.2019;16:48;1;2;D;5.8;0.344833333;411.28")
+  DT[, n2o_mass := N2O * 28 * 273.15 / 22.4136 / (273.15 + `T Haube innen Anfang [°C]`)]
+  DT[, A := 1] 
+  
+  N2O <- gasfluxes(DT[!is.na(n2o_mass)][, .(Datum, Standort, Plot, h_eff, A, Verschlusszeit, n2o_mass)], .id = c("Datum", "Standort", "Plot"), .V = "h_eff", .A = "A",
+                   .times = "Verschlusszeit", .C = "n2o_mass", plot = FALSE, verbose = FALSE)
+  f.detect <- c(`97.5%` = 12.1253368247024)
+  t.meas <- 1
+  
+
+  expect_equal(as.data.frame(selectfluxes(N2O, "kappa.max", f.detect = f.detect, t.meas = t.meas))[c("flux", "flux.se", "flux.p", "method", "kappa.max")],
+               structure(list(flux = 35.8503269424242, flux.se = 7.04713023648099, flux.p = 0.0314758844529013, 
+                              method = "robust linear", kappa.max = 2.70589512450848), row.names = c(NA, -1L), class = "data.frame") 
+  )
+}
+)
+
+
 

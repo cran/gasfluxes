@@ -1,6 +1,6 @@
-954e67f63a6c03c6d0dac42365b05962 *DESCRIPTION
+ca3ae1d89fe5e8432a7f059808c8e837 *DESCRIPTION
 dee8e8ce4b795afd8d4fcb624e9ae296 *NAMESPACE
-7be9a6af6f9b5c5a19a0cc6d7e1793fc *NEWS.md
+b2df2b1aeeaa76c6b5cf33a01e2fe695 *NEWS.md
 cce434764d2433cca22f1a05c74c6297 *R/HMR.R
 e537bd2e8fcd402d4cbb16da499961d2 *R/HMR.fit1.R
 606ab6fe491d1bf4f52f19c4fc583bad *R/HMRorig.R
@@ -9,14 +9,14 @@ e537bd2e8fcd402d4cbb16da499961d2 *R/HMR.fit1.R
 d5b80409fefc1c8cac501dddb7ce8bb7 *R/checkInput.R
 2758b83fe6708dcde75ab2683d268514 *R/fluxMeas.R
 b5132e8200ab3a9b2957ca3d67963584 *R/gasfluxes-package.R
-b29470025bfd4b60d77a58fe07ff7e87 *R/gasfluxes.R
+e4f0bbe385502178c3076d4e6f3d8d94 *R/gasfluxes.R
 8a8cfb58dc74e5d82bc0558ffaf64786 *R/linear.R
 fbb8d858773183570ad2ea55dc36404e *R/roblinear.R
-ac633b4c50be95be49f5c39ad4acbb80 *build/vignette.rds
+f006d7ed709392e719d0c0fe210baede *build/vignette.rds
 3da850ed541c47592f9962c8bcd20a1c *data/fluxMeas.rda
 30ff2dce1f13c5b6ea53906eb01c518b *inst/doc/gasfluxes-howto.R
 0720cdec090d08ec54386b34570040e0 *inst/doc/gasfluxes-howto.Rmd
-93a0a1a991143a8960fcb5f64277ae07 *inst/doc/gasfluxes-howto.html
+3d05f7f6db4b7d4ec187376d39fa47a8 *inst/doc/gasfluxes-howto.html
 9c6a5b58ffcd9bb90d8ced379edb6a04 *man/HMR.fit.Rd
 86cb16595cb294fc250a5404c6555be8 *man/HMR.orig.Rd
 e52f85aa23f883f131b3ba683bbedfcd *man/NDFE.fit.Rd
@@ -32,7 +32,7 @@ a2af539052ce22c14b225247ff89724b *man/rlin.fit.Rd
 9aedc1e305e87acb87d19916cb7c7d05 *tests/testthat/test_aggfluxes.R
 ddc84947240d16abe2e69530dc3dd55e *tests/testthat/test_checkInput.R
 7ebf40998c1abc68c3f16c4580cdfc44 *tests/testthat/test_fitting.R
-7bf6f6db2e55477bf9b2d01835c8e21c *tests/testthat/test_gasfluxes.R
+14af8ef3fbc9bf510b41dac73e80dfa3 *tests/testthat/test_gasfluxes.R
 98fe95d357e2978b71204f83cd248757 *vignettes/figs/FCS_fig2_rev.png
 c6459f659e0f1404b1f6f686131cd450 *vignettes/figs/FCS_fig3_rev.png
 8ff03102334b10fa37fd217fa3f93234 *vignettes/figs/FCS_fig4_rev.png

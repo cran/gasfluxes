@@ -1,3 +1,8 @@
+### Changes in v0.4-2
+
+#### Minor changes
+1. In rare instances, HMR could produce a fit that is practically linear, which is probably not a numerically stable fit. Such fits could be selected by *selectfluxes* with the "kappa.max" algorithm, which is a problem because the standard error of the flux would become huge due to extremely high uncertainty of the curvature parameter. An attempt is made now at identifying such fits and selecting the robust linear fit instead.
+
 ### Changes in v0.4-1
 
 #### Minor changes
