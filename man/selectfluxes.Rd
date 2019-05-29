@@ -4,7 +4,8 @@
 \alias{selectfluxes}
 \title{Select a flux estimate}
 \usage{
-selectfluxes(dat, select, f.detect = NULL, t.meas = NULL, ...)
+selectfluxes(dat, select, f.detect = NULL, t.meas = NULL,
+  tol = 5e-05, ...)
 }
 \arguments{
 \item{dat}{a data.table as returned by \code{\link{gasfluxes}}. The function modifies it by reference.}
@@ -14,6 +15,8 @@ selectfluxes(dat, select, f.detect = NULL, t.meas = NULL, ...)
 \item{f.detect}{detection limit for HMR method. This can be determined by a simple simulation (see examples) or for four data points the approximation in Parkin et al. (2012) can be used.}
 
 \item{t.meas}{a vector or single value giving the measurement time factor that relates to kappa.max. It is suggested to use the time difference between the first and last sample taken from the closed chamber. The unit should be consistent with the units of \code{f.detect} and kappa (e.g., h if kappa is in 1/h).}
+
+\item{tol}{the relative tolerance \code{abs((linear.f0 - HMR.f0)/HMR.f0)} below which the linear flux estimate and the HMR flux estimate are considered equal in the "kappa.max" algorithm. This is to protect against HMR fits that equal the linear fit and have extremely high standard errors. Defaults to \code{tol = 5e-5}.}
 
 \item{\dots}{further parameters}
 }

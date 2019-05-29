@@ -1,8 +1,8 @@
 Package: gasfluxes
 Type: Package
 Title: Greenhouse Gas Flux Calculation from Chamber Measurements
-Version: 0.4-2
-Date: 2019-03-19
+Version: 0.4-3
+Date: 2019-05-29
 Authors@R: c(person("Roland", "Fuss", role = c("aut", "cre"),
          email = "roland.fuss@thuenen.de"),
          person("Roman", "Hueppi", role = c("ctb")),
@@ -22,10 +22,10 @@ LazyData: true
 VignetteBuilder: knitr, rmarkdown
 RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2019-03-19 15:26:12 UTC; fuss
+Packaged: 2019-05-29 09:14:32 UTC; fuss
 Author: Roland Fuss [aut, cre],
   Roman Hueppi [ctb],
   Asger R. Pedersen [cph] (for code copied from the not-exported
     HMR:::.HMR.fit1 function (version 0.3.1))
 Repository: CRAN
-Date/Publication: 2019-03-20 07:50:10 UTC
+Date/Publication: 2019-05-29 10:40:02 UTC

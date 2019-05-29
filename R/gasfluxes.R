@@ -192,6 +192,7 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
 #' @param select character; specify a ruleset for selection of the final flux value, see details.
 #' @param f.detect detection limit for HMR method. This can be determined by a simple simulation (see examples) or for four data points the approximation in Parkin et al. (2012) can be used. 
 #' @param t.meas a vector or single value giving the measurement time factor that relates to kappa.max. It is suggested to use the time difference between the first and last sample taken from the closed chamber. The unit should be consistent with the units of \code{f.detect} and kappa (e.g., h if kappa is in 1/h).
+#' @param tol the relative tolerance \code{abs((linear.f0 - HMR.f0)/HMR.f0)} below which the linear flux estimate and the HMR flux estimate are considered equal in the "kappa.max" algorithm. This is to protect against HMR fits that equal the linear fit and have extremely high standard errors. Defaults to \code{tol = 5e-5}. 
 #' @param \dots further parameters
 #' 
 #'  
@@ -257,7 +258,7 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
 #' 
 #' @export
 
-selectfluxes <- function(dat, select, f.detect = NULL, t.meas = NULL, ...) {
+selectfluxes <- function(dat, select, f.detect = NULL, t.meas = NULL, tol = 5e-5, ...) {
   stopifnot(is.data.table(dat))
   if (!(select %in% c("RF2011", "RF2011new", "kappa.max"))) stop('Please specify an implemented algorithm, see help("select.fluxes").')
   #RF2011
@@ -367,7 +368,7 @@ selectfluxes <- function(dat, select, f.detect = NULL, t.meas = NULL, ...) {
     dat[method == "robust linear" & 
           is.finite(HMR.f0) &
           (HMR.kappa < kappa.max) & 
-          !(abs(HMR.f0.se/HMR.f0) > 1e10 & abs((linear.f0 - HMR.f0)/HMR.f0) < 1e-5), #protect against linear HMR fit 
+          !(abs(HMR.f0.se/HMR.f0) > 1e10 & abs((linear.f0 - HMR.f0)/HMR.f0) < tol), #protect against linear HMR fit 
         c("flux", "flux.se", "flux.p", "method") := list(HMR.f0,
                                                          HMR.f0.se,
                                                          HMR.f0.p,

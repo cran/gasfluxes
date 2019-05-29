@@ -123,7 +123,7 @@ simflux[is.na(f0), f0 := linear.f0] # use linear estimates where HMR could not b
 #dection limit as 97.5 % quantile (95 % confidence):
 f.detect <- simflux[, quantile(f0, 0.975)]
 f.detect # here in [ppm/h/m^2], use same unit as your flux estimates, 
-#e.g., convert to mass flux assuming chamber temperature of 15 °C and standard air pressure
+#e.g., convert to mass flux assuming chamber temperature of 15 degree celcius and standard air pressure
 f.detect / 1000 * 28 * 273.15 / 22.4 / (273.15 + 15)
 ```
 

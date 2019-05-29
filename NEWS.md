@@ -1,6 +1,14 @@
 ### Changes in v0.4-2
 
 #### Minor changes
+1. *selectfluxes* has now gained a tolerance parameter to enable fine-tuning the check introduced in the previous version.
+
+2. CRAN has asked for a package rebuild with the newest knitr version due to encoding issues in the vignette.
+
+
+### Changes in v0.4-2
+
+#### Minor changes
 1. In rare instances, HMR could produce a fit that is practically linear, which is probably not a numerically stable fit. Such fits could be selected by *selectfluxes* with the "kappa.max" algorithm, which is a problem because the standard error of the flux would become huge due to extremely high uncertainty of the curvature parameter. An attempt is made now at identifying such fits and selecting the robust linear fit instead.
 
 ### Changes in v0.4-1
