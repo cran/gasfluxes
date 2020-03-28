@@ -149,7 +149,7 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
   res <- dat[, {
     .ID <- do.call(paste, c(mget(.id), sep = "_"))[1]
     #plot for each ID
-    if (plot) {
+    if (..plot) {
       png(filename = paste0(paste(file.path(mainDir, subDir), .ID, sep = "/"), ".png"),
           width = 600, height = 480, units = "px", pointsize = 12)
       
@@ -164,7 +164,7 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
         lapply(funs, callFun, .t=get(.times), .C=get(.C), .A=get(.A)[1], .V=get(.V)[1], .ID=.ID, verbose=verbose, plot = plot), 
         make.names(names(funs))),
       recursive=F) 
-    if (plot) {
+    if (..plot) {
       cols <- c("linear" = "black", "robust linear" = "green",
                 "HMR" = "red", "original HMR" = "yellow",
                 "NDFE" = "blue")
@@ -390,4 +390,5 @@ utils::globalVariables(c('robust.linear.f0',
                          'HMR.f0', 'HMR.AIC',
                          'HMR.f0.p','HMR.f0.se', "HMR.kappa",
                          'i', 'robust.linear.weights', 'V1',
-                         'linear.r')) #non-standard evaluation in data.table
+                         'linear.r',
+                         '..plot')) #non-standard evaluation in data.table

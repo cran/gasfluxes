@@ -11,8 +11,7 @@ test_that("linear regression gives expected result", {
                               .Names = c("f0", "f0.se", "f0.p", "C0", "AIC", "AICc", "RSE", "r","diagnostics")), tolerance = 1e-5)
   
   C <- 320 + 0:3 * 10
-  expect_warning(fit <- lin.fit(t, C, 1, 0.3, "a", verbose = FALSE), regexp = "essentially perfect fit", fixed = TRUE)
-  expect_equal(fit$diagnostics, "essentially perfect fit: summary may be unreliable")
+  expect_equal(lin.fit(t, C, 1, 0.3, "a", verbose = FALSE)$diagnostics, "essentially perfect fit: summary may be unreliable")
 })
 
 test_that("robust linear regression gives expected result", {

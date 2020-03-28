@@ -52,14 +52,16 @@ HMR.orig <- function (t, C, A = 1, V, serie = "",
   
   tryCatch({
     stopifnot(length(t) > 3)
-    fit <- .HMR.fit1(t, C ,A, V, serie,
+    fit <- withWarnings(.HMR.fit1(t, C ,A, V, serie,
                      ngrid, LR.always = FALSE,
                      FollowHMR = TRUE,JPG = FALSE, PS = FALSE,
                      PHMR = FALSE,npred = 500, 
                      xtxt = "", ytxt = "", pcttxt ="",
                      MSE.zero = 10*max(.Machine$double.eps,.Machine$double.neg.eps),
                      bracketing.tol = 1e-7,
-                     bracketing.maxiter = 1000)
+                     bracketing.maxiter = 1000))
+    w <- if (is.null(fit$warnings)) "" else fit$warnings[[1]]$message
+    fit <- fit$value
     
     HMR.fun <-  function (phi,kappa,f0,t, V, A) {
       phi+f0*exp(-kappa*t)/(-kappa*V/A)
@@ -91,12 +93,12 @@ HMR.orig <- function (t, C, A = 1, V, serie = "",
       AIC = AIC_HMR,
       AICc = AICc_HMR,
       RSE = sigma,
-      diagnostics = "")
-    if (verbose) message(serie, ": (orig.) HMR fit successful")
+      diagnostics = w)
+    if (verbose) message(serie, if (w == "") ": (orig.) HMR fit successful" else ": (orig.) HMR fit warning")
     res
   },
   error = function(cond) {
-    if (verbose) message(serie, ": (orig.) HMR fit not successful")
+    if (verbose) message(serie, ": (orig.) HMR fit failed")
     list(
       f0 = NA_real_, 
       f0.se = NA_real_, 
@@ -107,40 +109,6 @@ HMR.orig <- function (t, C, A = 1, V, serie = "",
       AICc = NA_real_,
       RSE=NA_real_,
       diagnostics=cond$message)
-  },
-  warning = function(cond) {
-    fitsum <- summary(fit)
-    fitsumCoef <- fitsum$coef
-    SSE <- sum((C-HMR.fun(fit[["phi"]],
-                          fit[["kappa"]],
-                          fit[["f0"]],
-                          t, V, A))^2)
-    n <- length(t)
-    k <- 3
-    logLik <- -n * (log(2 * pi) + 1 - log(n) +  log(SSE))/2
-    
-    AIC_HMR <- AICcCustom(logLik, K = k + 1, second.ord = FALSE, nobs = n)
-    AICc_HMR <- AICcCustom(logLik, K = k + 1, second.ord = TRUE, nobs = n)
-    sigma <- sqrt(SSE/(n-k))
-    
-    try({
-      if (plot) {
-        curve(HMR.fun(fit[["phi"]], fit[["kappa"]], fit[["f0"]], x, V, A), 
-              from = min(t), to = max(t), add = TRUE, col = "yellow", lty = 2)
-      }}, silent = TRUE)
-    
-    res <- list(
-      f0 = fit[["f0"]], 
-      f0.se = fit[["f0.se"]], 
-      f0.p =  fit[["f0.p"]], 
-      kappa = fit[["kappa"]],
-      phi = fit[["phi"]],
-      AIC = AIC_HMR,
-      AICc = AICc_HMR,
-      RSE = sigma,
-      diagnostics = cond$message)
-    if (verbose) message(serie, ": (orig.) HMR fit successful (warning)")
-    res
   }
   )  
 } 

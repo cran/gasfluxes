@@ -42,8 +42,12 @@
 rlin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, ...) {
   tryCatch({
     stopifnot(length(t) > 3)
-    fit <- rlm(C ~ t, maxit = 200)
-    fitsum <- summary(fit)
+    fit <- withWarnings(rlm(C ~ t, maxit = 200))
+    w <- if (is.null(fit$warnings)) "" else fit$warnings[[1]]$message
+    fit <- fit$value
+    fitsum <- withWarnings(summary(fit))
+    if (w == "") w <- if (is.null(fitsum$warnings)) "" else fitsum$warnings[[1]]$message
+    fitsum <- fitsum$value
     fitsumCoef <- fitsum$coef
     try({
       if (plot) {
@@ -57,12 +61,12 @@ rlin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, 
       f0.p = f.robftest(fit)[["p.value"]], 
       C0 = fitsumCoef["(Intercept)", "Value"],
       weights = fit$w,
-      diagnostics = "")
-    if (verbose) message(serie, ": rlm fit successful")
+      diagnostics = w)
+    if (verbose) message(serie, if (w == "") ": rlm fit successful" else ": rlm fit warning")
     res
   },
   error = function(cond) {
-    if (verbose) message(serie, ": rlm fit not successful")
+    if (verbose) message(serie, ": rlm fit failed")
     list(
       f0 = NA_real_, 
       f0.se = NA_real_, 
@@ -70,24 +74,6 @@ rlin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, 
       C0=NA_real_,
       weights=NA_real_,
       diagnostics=cond$message)
-  },
-  warning = function(cond) {
-    fitsum <- summary(fit)
-    fitsumCoef <- fitsum$coef
-    try({
-      if (plot) {
-        curve(predict(fit, newdata = data.frame(t = x)), 
-              from = min(t), to = max(t), add = TRUE, col = "green", lty = 2)
-      }}, silent = TRUE)
-    res <- list(
-      f0 = fitsumCoef["t", "Value"] * V/A, 
-      f0.se = fitsumCoef["t", "Std. Error"] * V/A, 
-      f0.p = f.robftest(fit)[["p.value"]], 
-      C0 = fitsumCoef["(Intercept)", "Value"],
-      weights = fit$w,
-      diagnostics = cond$message)
-    if (verbose) message(serie, ": rlm fit successful (warning)")
-    res
   }
   )  
 } 

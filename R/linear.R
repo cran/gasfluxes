@@ -44,9 +44,13 @@
 lin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, ...) {
   tryCatch({
     stopifnot(length(t) > 2)
-    fit <- lm(C ~ t)
+    fit <- withWarnings(lm(C ~ t))
+    w <- if (is.null(fit$warnings)) "" else fit$warnings[[1]]$message
+    fit <- fit$value
     r <- cor(C, t)
-    fitsum <- summary(fit)
+    fitsum <- withWarnings(summary(fit))
+    if (w == "") w <- if (is.null(fitsum$warnings)) "" else fitsum$warnings[[1]]$message
+    fitsum <- fitsum$value
     fitsumCoef <- fitsum$coef
     try({
       if (plot) {
@@ -63,12 +67,12 @@ lin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, .
       AICc = AICc(fit),
       RSE = fitsum$sigma,
       r = r,
-      diagnostics = "")
-    if (verbose) message(serie, ": linear fit successful")
+      diagnostics = w)
+    if (verbose) message(serie, if (w == "") ": lm fit successful" else ": lm fit warning")
     res
   },
   error = function(cond) {
-    if (verbose) message(serie, ": linear fit not successful")
+    if (verbose) message(serie, ": linear fit failed")
     list(
       f0 = NA_real_, 
       f0.se = NA_real_, 
@@ -79,27 +83,6 @@ lin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, .
       RSE = NA_real_,
       r = NA_real_,
       diagnostics=cond$message)
-  },
-  warning = function(cond) {
-    fitsum <- summary(fit)
-    fitsumCoef <- fitsum$coef
-    try({
-      if (plot) {
-        lines(t, predict(fit), col = "black")
-      }
-    }, silent = TRUE)
-    res <- list(
-      f0 = fitsumCoef["t", "Estimate"] * V/A, 
-      f0.se = fitsumCoef["t", "Std. Error"] * V/A, 
-      f0.p = fitsumCoef["t", "Pr(>|t|)"], 
-      C0 = fitsumCoef["(Intercept)", "Estimate"],
-      AIC=AIC(fit),
-      AICc=AICc(fit),
-      RSE=fitsum$sigma,
-      r = r,
-      diagnostics = cond$message)
-    if (verbose) message(serie, ": linear fit successful (warning)")
-    res
   }
   )  
 } 

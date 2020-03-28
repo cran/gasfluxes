@@ -90,10 +90,14 @@ HMR.fit <- function (t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE, p
 
   tryCatch({
     stopifnot(length(t) > 3)
-    fit <- nls(C ~ cbind(1, exp(-exp(k)*t)/(-exp(k)*V/A)), 
+    fit <- withWarnings(nls(C ~ cbind(1, exp(-exp(k)*t)/(-exp(k)*V/A)), 
                start= list(k=k), algorithm = "plinear",
-               control=nls.control(maxiter=maxiter, minFactor=1e-10))
-    fitsum <- summary(fit)
+               control=nls.control(maxiter=maxiter, minFactor=1e-10)))
+    w <- if (is.null(fit$warnings)) "" else fit$warnings[[1]]$message
+    fit <- fit$value
+    fitsum <- withWarnings(summary(fit))
+    if (w == "") w <- if (is.null(fitsum$warnings)) "" else fitsum$warnings[[1]]$message
+    fitsum <- fitsum$value
     fitsumCoef <- fitsum$coef
     try({
       if (plot) {
@@ -110,12 +114,12 @@ HMR.fit <- function (t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE, p
       AIC=AIC(fit),
       AICc=AICc(fit),
       RSE=fitsum$sigma,
-      diagnostics = "")
-    if (verbose) message(serie, ": HMR fit successful")
+      diagnostics = w)
+    if (verbose) message(serie, if (w == "") ": HMR fit successful" else ": HMR fit warning")
     res
   },
   error = function(cond) {
-    if (verbose) message(serie, ": HMR fit not successful")
+    if (verbose) message(serie, ": HMR fit failed")
     list(
       f0 = NA_real_, 
       f0.se = NA_real_, 
@@ -126,27 +130,6 @@ HMR.fit <- function (t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE, p
       AICc=NA_real_,
       RSE=NA_real_,
       diagnostics=cond$message)
-  },
-  warning = function(cond) {
-    fitsum <- summary(fit)
-    fitsumCoef <- fitsum$coef
-    try({
-      if (plot) {
-        curve(predict(fit, newdata = data.frame(t = x)), 
-              from = min(t), to = max(t), add = TRUE, col = "red")
-      }}, silent = TRUE)
-    res <- list(
-      f0 = fitsumCoef[".lin2", "Estimate"], 
-      f0.se = fitsumCoef[".lin2", "Std. Error"], 
-      f0.p = fitsumCoef[".lin2", "Pr(>|t|)"], 
-      kappa=exp(fitsumCoef["k", "Estimate"]),
-      phi=fitsumCoef[".lin1", "Estimate"],
-      AIC=AIC(fit),
-      AICc=AICc(fit),
-      RSE=fitsum$sigma,
-      diagnostics = cond$message)
-    if (verbose) message(serie, ": HMR fit successful (warning)")
-    res
   }
   )  
 } 

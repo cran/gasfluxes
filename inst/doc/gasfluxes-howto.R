@@ -1,4 +1,4 @@
-## ----setup, include = FALSE, cache = FALSE-------------------------------
+## ----setup, include = FALSE, cache = FALSE------------------------------------
 require(data.table)
 require(gasfluxes)
 Sys.setenv(LANG = "C")
@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
   comment = "#>", cache = TRUE
 )
 
-## ----dataImport, include = TRUE------------------------------------------
+## ----dataImport, include = TRUE-----------------------------------------------
 library(data.table)
 #adjust path (see help("setwd")) and file name as appropriate
 fluxMeas <- fread("fluxmeas.csv") 
@@ -16,16 +16,16 @@ fluxMeas <- fluxMeas[ID %in% c("ID6","ID11")]
 
 fluxMeas
 
-## ----fluxCalculation-----------------------------------------------------
+## ----fluxCalculation----------------------------------------------------------
 library(gasfluxes)
 flux.results <- gasfluxes(fluxMeas, method = c("linear","robust linear", "HMR"), plot = TRUE)
 flux.results
 
-## ----fluxSelection-------------------------------------------------------
+## ----fluxSelection------------------------------------------------------------
 selectfluxes(flux.results, select = "kappa.max", f.detect = 0.031, t.meas = 1)
 flux.results[,c(1,26:30)]
 
-## ----detectionLimitSimulation--------------------------------------------
+## ----detectionLimitSimulation-------------------------------------------------
 ### estimate f.detect by simulation 
 C0    <- 325   #ambient concentration, here in [ppm]
 GC.sd <- 5 #uncertainty of GC measurement, here in [ppm]

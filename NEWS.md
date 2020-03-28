@@ -1,4 +1,12 @@
-### Changes in v0.4-2
+### Changes in v0.4-4
+
+#### Minor changes
+1. Warning handlers did not work correctly.
+
+2. There was a scoping issue with the plot parameter in *gasfluxes* if one of the ID columns was called "plot". 
+
+
+### Changes in v0.4-3
 
 #### Minor changes
 1. *selectfluxes* has now gained a tolerance parameter to enable fine-tuning the check introduced in the previous version.
