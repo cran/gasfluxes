@@ -67,7 +67,6 @@ erfc <- function(x) 2*pnorm(-sqrt(2)*x)
 #' #note that the flux estimate is very uncertain because 
 #' #there are no data points in the region of high curvature
 #' 
-#' @importFrom AICcmodavg AICc
 #' @export
 
 
@@ -96,11 +95,11 @@ NDFE.fit <- function (t, C, A = 1, V, serie = "", k = log(0.01), verbose = TRUE,
       f0 = fitsumCoef[".lin2", "Estimate"], 
       f0.se = fitsumCoef[".lin2", "Std. Error"], 
       f0.p = fitsumCoef[".lin2", "Pr(>|t|)"], 
-      tau=exp(fitsumCoef["k", "Estimate"]),
-      C0=fitsumCoef[".lin1", "Estimate"],
-      AIC=AIC(fit),
-      AICc=AICc(fit),
-      RSE=fitsum$sigma,
+      tau = exp(fitsumCoef["k", "Estimate"]),
+      C0 = fitsumCoef[".lin1", "Estimate"],
+      AIC = AIC(fit),
+      AICc = aicc(fit),
+      RSE = fitsum$sigma,
       diagnostics = w)
     if (verbose) message(serie, if (w == "") ": NDFE fit successful" else ": NDFE fit warning")
     res
@@ -111,11 +110,11 @@ NDFE.fit <- function (t, C, A = 1, V, serie = "", k = log(0.01), verbose = TRUE,
       f0 = NA_real_, 
       f0.se = NA_real_, 
       f0.p = NA_real_, 
-      tau=NA_real_,
-      C0=NA_real_,
-      AIC=NA_real_,
-      AICc=NA_real_,
-      RSE=NA_real_,
+      tau = NA_real_,
+      C0 = NA_real_,
+      AIC = NA_real_,
+      AICc = NA_real_,
+      RSE = NA_real_,
       diagnostics=cond$message)
   }
   )  

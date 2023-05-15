@@ -4,8 +4,7 @@
 \alias{selectfluxes}
 \title{Select a flux estimate}
 \usage{
-selectfluxes(dat, select, f.detect = NULL, t.meas = NULL,
-  tol = 5e-05, ...)
+selectfluxes(dat, select, f.detect = NULL, t.meas = NULL, tol = 5e-05, ...)
 }
 \arguments{
 \item{dat}{a data.table as returned by \code{\link{gasfluxes}}. The function modifies it by reference.}
@@ -30,15 +29,10 @@ Selects the appropriate flux estimate from linear, robust linear and non-linear 
 \details{
 Available selection algorithms currently are
 \describe{
-\item{"RF2011"}{The algorithm used, e.g., in Leiber-Sauheitl 2014 (doi:10.5194/bg-11-749-2014).
-This overwrites the methods parameter. The factor guarding against degenerate HMR fits
-can be set via the ellipsis as \code{gfactor}. Default is \code{gfactor = 4}. This method is not recommended any more and only provided for reproducibility of old results.}
-\item{"RF2011new"}{The same rules as "RF2011", but using the improved fitting function for HMR,
-which results in larger SE and p-values. Thus, it is less likely to select the HMR result.
-This method is not recommended any more and only provided for reproducibility of old results.}
 \item{"kappa.max"}{The selection algorithm restricts the use of HMR by imposing a maximal value for kappa "kappa.max", 
 depending on the quotient of the linear flux estimate and the minimal detectable flux (f.detect), as well as 
-the chamber closure time (t.meas). kappa.max = f.lin/f.detect/t.meas. This is currently the recommended algorithm.}
+the chamber closure time (t.meas). kappa.max = f.lin/f.detect/t.meas. This is currently the recommended algorithm. 
+Note that the algorithm was developed for predominantly positive fluxes (such as N2O fluxes). If data with considerable gas uptake is analyzed, the algorithm needs to be modified, which currently means the user needs to implement it themselves.}
 }
 
 Other selection algorithms could be implemented, but selection can always be done as a postprocessing step. E.g., if many data points are available for each flux measurement it is probably most sensible to use AICc.
@@ -49,8 +43,6 @@ res <- gasfluxes(fluxMeas[1:499],
                  .id = "serie", .V = "V", .A = "A",
                  .times = "time", .C = "C",
                  methods = c("linear", "robust linear", "HMR"), verbose = FALSE, plot = FALSE)
-selectfluxes(res, "RF2011new")
-res[method == "HMR", .N] #2
 
 ### estimate f.detect by simulation ###
 #ambient concentration:

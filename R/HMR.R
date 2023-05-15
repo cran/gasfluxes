@@ -52,14 +52,6 @@
 #' plot(C ~ t)
 #' curve({fit$phi + fit$f0 * exp(-fit$kappa * x)/(-fit$kappa*0.3)}, 
 #'       from = 0, to = 1, add = TRUE)
-#' #compare with fitting function from HMR package 0.3.1
-#'   gasfluxes:::.HMR.fit1(t, C,
-#'                   1, 0.3, "a",
-#'                   ngrid = 1000, LR.always = FALSE, FollowHMR = TRUE, 
-#'                   JPG = FALSE, PS = FALSE, PHMR = FALSE, npred = 500, 
-#'                   xtxt = "", ytxt = "", pcttxt = "",
-#'                   MSE.zero = 10 * max(.Machine$double.eps, .Machine$double.neg.eps), 
-#'                   bracketing.tol = 1e-07, bracketing.maxiter = 1000)[2:4]
 #' 
 #' \dontrun{
 #' #a dataset of 1329 chamber N2O flux measurements
@@ -81,7 +73,6 @@
 #' boxplot(fluxes[f0.se < 1e4, sqrt(f0.se)])
 #' }
 #' 
-#' @importFrom AICcmodavg AICc
 #' @importFrom stats nls nls.control predict AIC
 #' @importFrom graphics curve 
 #' @export
@@ -109,11 +100,11 @@ HMR.fit <- function (t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE, p
       f0 = fitsumCoef[".lin2", "Estimate"], 
       f0.se = fitsumCoef[".lin2", "Std. Error"], 
       f0.p = fitsumCoef[".lin2", "Pr(>|t|)"], 
-      kappa=exp(fitsumCoef["k", "Estimate"]),
-      phi=fitsumCoef[".lin1", "Estimate"],
-      AIC=AIC(fit),
-      AICc=AICc(fit),
-      RSE=fitsum$sigma,
+      kappa = exp(fitsumCoef["k", "Estimate"]),
+      phi = fitsumCoef[".lin1", "Estimate"],
+      AIC = AIC(fit),
+      AICc = aicc(fit),
+      RSE = fitsum$sigma,
       diagnostics = w)
     if (verbose) message(serie, if (w == "") ": HMR fit successful" else ": HMR fit warning")
     res
@@ -124,11 +115,11 @@ HMR.fit <- function (t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE, p
       f0 = NA_real_, 
       f0.se = NA_real_, 
       f0.p = NA_real_, 
-      kappa=NA_real_,
-      phi=NA_real_,
-      AIC=NA_real_,
-      AICc=NA_real_,
-      RSE=NA_real_,
+      kappa = NA_real_,
+      phi = NA_real_,
+      AIC = NA_real_,
+      AICc = NA_real_,
+      RSE = NA_real_,
       diagnostics=cond$message)
   }
   )  

@@ -4,8 +4,18 @@
 \alias{HMR.fit}
 \title{HMR fit}
 \usage{
-HMR.fit(t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE,
-  plot = FALSE, maxiter = 100, ...)
+HMR.fit(
+  t,
+  C,
+  A = 1,
+  V,
+  serie = "",
+  k = log(1.5),
+  verbose = TRUE,
+  plot = FALSE,
+  maxiter = 100,
+  ...
+)
 }
 \arguments{
 \item{t}{time values (usually in hours)}
@@ -64,14 +74,6 @@ print(fit <- HMR.fit(t, C, 1, 0.3, "a"))
 plot(C ~ t)
 curve({fit$phi + fit$f0 * exp(-fit$kappa * x)/(-fit$kappa*0.3)}, 
       from = 0, to = 1, add = TRUE)
-#compare with fitting function from HMR package 0.3.1
-  gasfluxes:::.HMR.fit1(t, C,
-                  1, 0.3, "a",
-                  ngrid = 1000, LR.always = FALSE, FollowHMR = TRUE, 
-                  JPG = FALSE, PS = FALSE, PHMR = FALSE, npred = 500, 
-                  xtxt = "", ytxt = "", pcttxt = "",
-                  MSE.zero = 10 * max(.Machine$double.eps, .Machine$double.neg.eps), 
-                  bracketing.tol = 1e-07, bracketing.maxiter = 1000)[2:4]
 
 \dontrun{
 #a dataset of 1329 chamber N2O flux measurements

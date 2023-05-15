@@ -4,8 +4,7 @@
 \alias{rlin.fit}
 \title{Robust linear concentration - time model}
 \usage{
-rlin.fit(t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE,
-  ...)
+rlin.fit(t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, ...)
 }
 \arguments{
 \item{t}{time values (usually in hours)}

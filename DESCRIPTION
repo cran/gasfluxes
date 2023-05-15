@@ -1,31 +1,27 @@
 Package: gasfluxes
 Type: Package
 Title: Greenhouse Gas Flux Calculation from Chamber Measurements
-Version: 0.4-4
-Date: 2020-03-27
+Version: 0.5
+Date: 2023-05-15
 Authors@R: c(person("Roland", "Fuss", role = c("aut", "cre"),
          email = "roland.fuss@thuenen.de"),
-         person("Roman", "Hueppi", role = c("ctb")),
-         person("Asger R.", "Pedersen", role = "cph",
-         comment = "for code copied from the not-exported HMR:::.HMR.fit1 function (version 0.3.1)")
-         )
+         person("Roman", "Hueppi", role = c("ctb")))
 Maintainer: Roland Fuss <roland.fuss@thuenen.de>
-BugReports: https://bitbucket.org/ecoRoland/gasfluxes/issues
+Contact: Roland Fuss <roland.fuss@thuenen.de>
 Description: Functions for greenhouse gas flux calculation from chamber
     measurements.
+URL: https://git-dmz.thuenen.de/fuss/gasfluxes
 License: GPL (>= 2)
-Depends: R (>= 3.5.0)
-Imports: sfsmisc (>= 1.0), data.table (>= 1.9.4), MASS (>= 7.3),
-        AICcmodavg (>= 2.0), stats, graphics, grDevices
+Depends: R (>= 4.3.0)
+Imports: sfsmisc, data.table (>= 1.14.8), MASS, stats, graphics,
+        grDevices
 Suggests: testthat, knitr, rmarkdown
 LazyData: true
 VignetteBuilder: knitr, rmarkdown
-RoxygenNote: 6.1.1
+RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2020-03-27 05:36:27 UTC; Gryphius
+Packaged: 2023-05-15 09:15:24 UTC; fuss
 Author: Roland Fuss [aut, cre],
-  Roman Hueppi [ctb],
-  Asger R. Pedersen [cph] (for code copied from the not-exported
-    HMR:::.HMR.fit1 function (version 0.3.1))
+  Roman Hueppi [ctb]
 Repository: CRAN
-Date/Publication: 2020-03-28 03:40:02 UTC
+Date/Publication: 2023-05-15 09:40:02 UTC

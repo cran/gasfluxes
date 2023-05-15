@@ -4,8 +4,7 @@
 \alias{lin.fit}
 \title{Linear concentration - time model}
 \usage{
-lin.fit(t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE,
-  ...)
+lin.fit(t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, ...)
 }
 \arguments{
 \item{t}{time values (usually in hours)}

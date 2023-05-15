@@ -4,10 +4,22 @@
 \alias{gasfluxes}
 \title{Flux calculation}
 \usage{
-gasfluxes(dat, .id = "ID", .V = "V", .A = "A", .times = "time",
-  .C = "C", methods = c("linear", "robust linear", "HMR", "NDFE"),
-  k_HMR = log(1.5), k_NDFE = log(0.01), verbose = TRUE,
-  plot = TRUE, select, maxiter = 100, ...)
+gasfluxes(
+  dat,
+  .id = "ID",
+  .V = "V",
+  .A = "A",
+  .times = "time",
+  .C = "C",
+  methods = c("linear", "robust linear", "HMR", "NDFE"),
+  k_HMR = log(1.5),
+  k_NDFE = log(0.01),
+  verbose = TRUE,
+  plot = TRUE,
+  select,
+  maxiter = 100,
+  ...
+)
 }
 \arguments{
 \item{dat}{a data.frame or data.table with data from flux measurements.}
@@ -51,7 +63,6 @@ Available methods are
 "linear":\tab \code{\link{lin.fit}}\cr
 "robust linear":\tab \code{\link{rlin.fit}}\cr
 "HMR":\tab \code{\link{HMR.fit}}\cr
-"original HMR":\tab \code{\link{HMR.orig}}\cr
 "NDFE":\tab \code{\link{NDFE.fit}}\cr
 }
 Specifying other methods results in an error. 
@@ -83,15 +94,11 @@ data(fluxMeas)
 res <- gasfluxes(fluxMeas[1:400,], 
                  .id = "serie", .V = "V", .A = "A",
                  .times = "time", .C = "C",
-                 methods = c("HMR", "original HMR"), verbose = TRUE)
+                 methods = c("HMR"), verbose = TRUE)
                  
 #number of successful fits
 res[, sum(!is.na(HMR.kappa))]
-res[, sum(!is.na(original.HMR.kappa))]
 
-#Do the results differ?
-plot(res[["HMR.f0"]], res[["original.HMR.f0"]])
-abline(0, 1)
 
 
 res <- gasfluxes(fluxMeas, 

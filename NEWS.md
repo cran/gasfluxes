@@ -1,3 +1,7 @@
+### Changes in v0.5
+The old deprecated original HMR algorithm has been removed. Old deprecated flux selection algorithms have been removed. Removed dependency on package AICcmodavg.
+
+
 ### Changes in v0.4-4
 
 #### Minor changes

@@ -27,7 +27,6 @@
 #' "linear":\tab \code{\link{lin.fit}}\cr
 #' "robust linear":\tab \code{\link{rlin.fit}}\cr
 #' "HMR":\tab \code{\link{HMR.fit}}\cr
-#' "original HMR":\tab \code{\link{HMR.orig}}\cr
 #' "NDFE":\tab \code{\link{NDFE.fit}}\cr
 #' }
 #' Specifying other methods results in an error. 
@@ -62,15 +61,11 @@
 #' res <- gasfluxes(fluxMeas[1:400,], 
 #'                  .id = "serie", .V = "V", .A = "A",
 #'                  .times = "time", .C = "C",
-#'                  methods = c("HMR", "original HMR"), verbose = TRUE)
+#'                  methods = c("HMR"), verbose = TRUE)
 #'                  
 #' #number of successful fits
 #' res[, sum(!is.na(HMR.kappa))]
-#' res[, sum(!is.na(original.HMR.kappa))]
 #' 
-#' #Do the results differ?
-#' plot(res[["HMR.f0"]], res[["original.HMR.f0"]])
-#' abline(0, 1)
 #' 
 #' 
 #' res <- gasfluxes(fluxMeas, 
@@ -135,7 +130,6 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
                  res
                },
                "HMR" = function(...) HMR.fit(..., k = k_HMR, maxiter = maxiter),
-               "original HMR" = HMR.orig,
                "NDFE" = function(...) NDFE.fit(..., k = k_HMR, maxiter = maxiter))
   stopifnot(all(methods %in% names(funs)))
   funs <- funs[methods]
@@ -203,15 +197,10 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
 #' @details
 #' Available selection algorithms currently are
 #' \describe{
-#' \item{"RF2011"}{The algorithm used, e.g., in Leiber-Sauheitl 2014 (doi:10.5194/bg-11-749-2014).
-#' This overwrites the methods parameter. The factor guarding against degenerate HMR fits
-#' can be set via the ellipsis as \code{gfactor}. Default is \code{gfactor = 4}. This method is not recommended any more and only provided for reproducibility of old results.}
-#' \item{"RF2011new"}{The same rules as "RF2011", but using the improved fitting function for HMR,
-#' which results in larger SE and p-values. Thus, it is less likely to select the HMR result.
-#' This method is not recommended any more and only provided for reproducibility of old results.}
 #' \item{"kappa.max"}{The selection algorithm restricts the use of HMR by imposing a maximal value for kappa "kappa.max", 
 #' depending on the quotient of the linear flux estimate and the minimal detectable flux (f.detect), as well as 
-#' the chamber closure time (t.meas). kappa.max = f.lin/f.detect/t.meas. This is currently the recommended algorithm.}
+#' the chamber closure time (t.meas). kappa.max = f.lin/f.detect/t.meas. This is currently the recommended algorithm. 
+#' Note that the algorithm was developed for predominantly positive fluxes (such as N2O fluxes). If data with considerable gas uptake is analyzed, the algorithm needs to be modified, which currently means the user needs to implement it themselves.}
 #' }
 #' 
 #' Other selection algorithms could be implemented, but selection can always be done as a postprocessing step. E.g., if many data points are available for each flux measurement it is probably most sensible to use AICc.
@@ -226,8 +215,6 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
 #'                  .id = "serie", .V = "V", .A = "A",
 #'                  .times = "time", .C = "C",
 #'                  methods = c("linear", "robust linear", "HMR"), verbose = FALSE, plot = FALSE)
-#' selectfluxes(res, "RF2011new")
-#' res[method == "HMR", .N] #2
 #' 
 #' ### estimate f.detect by simulation ###
 #' #ambient concentration:
@@ -260,81 +247,8 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
 
 selectfluxes <- function(dat, select, f.detect = NULL, t.meas = NULL, tol = 5e-5, ...) {
   stopifnot(is.data.table(dat))
-  if (!(select %in% c("RF2011", "RF2011new", "kappa.max"))) stop('Please specify an implemented algorithm, see help("select.fluxes").')
-  #RF2011
-  if (select == "RF2011") {
-    if (!all(c("robust.linear.f0",
-               "robust.linear.f0.se",
-               "robust.linear.f0.p",
-               "linear.f0",
-               "linear.f0.se",
-               "linear.f0.p",
-               "original.HMR.f0",
-               "original.HMR.kappa",
-               "original.HMR.AIC",
-               "original.HMR.f0.se",
-               "linear.AIC",
-               "original.HMR.f0.p") %in% names(dat))) stop("Please use return value of gasfluxes function containing results of linear, robust linear and original HMR regression.")
-    
-    if (!("gfactor" %in% names(list(...)))) gfactor <- 4 else gfactor <- list(...)[["gfactor"]]
-    dat[, c("flux", "flux.se", "flux.p", "method") := list(robust.linear.f0,
-                                                           robust.linear.f0.se,
-                                                           robust.linear.f0.p,
-                                                           "robust linear")]
-    dat[!is.finite(flux), c("flux", "flux.se", "flux.p", "method") := list(linear.f0,
-                                                                           linear.f0.se,
-                                                                           linear.f0.p,
-                                                                           "linear")]
-    dat[method == "robust linear" & 
-          is.finite(original.HMR.f0) &
-          is.finite(original.HMR.kappa) &
-          (original.HMR.AIC < linear.AIC) &
-          (original.HMR.f0.p < robust.linear.f0.p) &
-          (abs(original.HMR.f0) <= abs(robust.linear.f0) * gfactor), 
-        c("flux", "flux.se", "flux.p", "method") := list(original.HMR.f0,
-                                                         original.HMR.f0.se,
-                                                         original.HMR.f0.p,
-                                                         "original HMR")]
-    dat[!is.finite(flux), method := "error"]
-  }
+  if (!(select %in% c("kappa.max"))) stop('Please specify an implemented algorithm, see help("select.fluxes").')
   
-  #RF2011new
-  if (select == "RF2011new") {
-    if (!all(c("robust.linear.f0",
-               "robust.linear.f0.se",
-               "robust.linear.f0.p",
-               "linear.f0",
-               "linear.f0.se",
-               "linear.f0.p",
-               "HMR.f0",
-               "HMR.kappa",
-               "HMR.AIC",
-               "linear.AIC",
-               "HMR.f0.se",
-               "HMR.f0.p") %in% names(dat))) stop("Please use return value of gasfluxes function containing results of linear, robust linear and HMR regression.")
-    
-    if (!("gfactor" %in% names(list(...)))) gfactor <- 4 else gfactor <- list(...)[["gfactor"]]
-    dat[, c("flux", "flux.se", "flux.p", "method") := list(robust.linear.f0,
-                                                           robust.linear.f0.se,
-                                                           robust.linear.f0.p,
-                                                           "robust linear")]
-    dat[!is.finite(flux), c("flux", "flux.se", "flux.p", "method") := list(linear.f0,
-                                                                           linear.f0.se,
-                                                                           linear.f0.p,
-                                                                           "linear")]
-    dat[method == "robust linear" & 
-          is.finite(HMR.f0) &
-          (HMR.AIC < linear.AIC) &
-          (HMR.f0.p < robust.linear.f0.p) &
-          (abs(HMR.f0) <= abs(robust.linear.f0) * gfactor), 
-        c("flux", "flux.se", "flux.p", "method") := list(HMR.f0,
-                                                         HMR.f0.se,
-                                                         HMR.f0.p,
-                                                         "HMR")]
-    dat[!is.finite(flux), method := "error"]
-  }
-  
-
   if (select == "kappa.max") {
     if (!all(c("robust.linear.f0",
                "robust.linear.f0.se",

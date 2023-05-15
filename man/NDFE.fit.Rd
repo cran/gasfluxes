@@ -4,8 +4,18 @@
 \alias{NDFE.fit}
 \title{NDFE fit}
 \usage{
-NDFE.fit(t, C, A = 1, V, serie = "", k = log(0.01), verbose = TRUE,
-  plot = FALSE, maxiter = 100, ...)
+NDFE.fit(
+  t,
+  C,
+  A = 1,
+  V,
+  serie = "",
+  k = log(0.01),
+  verbose = TRUE,
+  plot = FALSE,
+  maxiter = 100,
+  ...
+)
 }
 \arguments{
 \item{t}{time values (usually in hours)}

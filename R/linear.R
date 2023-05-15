@@ -35,7 +35,6 @@
 #' plot(C ~ t)
 #' curve({fit$f0/0.3 * x + fit$C0}, from = 0, to = 1, add = TRUE)
 #' 
-#' @importFrom AICcmodavg AICc
 #' @importFrom stats lm predict AIC cor
 #' @importFrom graphics lines
 #' @export
@@ -64,7 +63,7 @@ lin.fit <- function (t, C, A = 1, V, serie = "", verbose = TRUE, plot = FALSE, .
       f0.p = fitsumCoef["t", "Pr(>|t|)"], 
       C0 = fitsumCoef["(Intercept)", "Estimate"],
       AIC = AIC(fit),
-      AICc = AICc(fit),
+      AICc = aicc(fit),
       RSE = fitsum$sigma,
       r = r,
       diagnostics = w)
