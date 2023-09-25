@@ -1,3 +1,8 @@
+### Changes in v0.6
+
+#### Minor changes
+Following a suggestion by Thomas Gremmen, diagnostic plots are now in a single PDF file. The (potentially numerous) PNG files created by previous versions caused issues on some network drives.
+
 ### Changes in v0.5
 The old deprecated original HMR algorithm has been removed. Old deprecated flux selection algorithms have been removed. Removed dependency on package AICcmodavg.
 
@@ -26,7 +31,7 @@ The old deprecated original HMR algorithm has been removed. Old deprecated flux 
 ### Changes in v0.4-1
 
 #### Minor changes
-1. Weights from robust linear regression are now separated by "|" insteaf of "," to better accomodate international users, [#12](https://bitbucket.org/ecoRoland/gasfluxes/issues/12/robustlinearweights-output-messes-up-comma)
+1. Weights from robust linear regression are now separated by "|" instead of "," to better accommodate international users.
 
 
 ### Changes in v0.4
@@ -44,4 +49,4 @@ The old deprecated original HMR algorithm has been removed. Old deprecated flux 
 
 #### BUG FIXES
 
-1. File names and titles of plots were not correctly using the flux ID, [#9](https://bitbucket.org/ecoRoland/gasfluxes/issues/9/plot-names-when-id-is-a-factor-variable).
+1. File names and titles of plots were not correctly using the flux ID.

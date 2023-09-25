@@ -42,7 +42,7 @@ gasfluxes(
 
 \item{verbose}{logical; print progress messages?}
 
-\item{plot}{create plots if TRUE (the default). The IDs are used as file names and should thus not include characters that are not allowed in file names, such as \code{/} or \code{=}. A directory "pics"  is created in the working directory if it doesn't exist. The plots are only intended to facilitate quick checking, not for publication quality graphs.}
+\item{plot}{create a PDF with plots in the working directory if \code{TRUE} (the default). The IDs are used as plot names. The plots are only intended to facilitate quick checking, not for publication quality graphs.}
 
 \item{select}{deprecated; please use function \code{\link{selectfluxes}}.}
 

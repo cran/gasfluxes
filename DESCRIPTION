@@ -1,8 +1,8 @@
 Package: gasfluxes
 Type: Package
 Title: Greenhouse Gas Flux Calculation from Chamber Measurements
-Version: 0.5
-Date: 2023-05-15
+Version: 0.6-1
+Date: 2023-09-25
 Authors@R: c(person("Roland", "Fuss", role = c("aut", "cre"),
          email = "roland.fuss@thuenen.de"),
          person("Roman", "Hueppi", role = c("ctb")))
@@ -20,8 +20,8 @@ LazyData: true
 VignetteBuilder: knitr, rmarkdown
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2023-05-15 09:15:24 UTC; fuss
+Packaged: 2023-09-25 05:06:01 UTC; fuss
 Author: Roland Fuss [aut, cre],
   Roman Hueppi [ctb]
 Repository: CRAN
-Date/Publication: 2023-05-15 09:40:02 UTC
+Date/Publication: 2023-09-25 06:20:02 UTC

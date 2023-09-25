@@ -12,7 +12,7 @@
 #' @param k_HMR starting value for \code{\link{HMR.fit}}.
 #' @param k_NDFE starting value for \code{\link{NDFE.fit}}.
 #' @param verbose logical; print progress messages?
-#' @param plot create plots if TRUE (the default). The IDs are used as file names and should thus not include characters that are not allowed in file names, such as \code{/} or \code{=}. A directory "pics"  is created in the working directory if it doesn't exist. The plots are only intended to facilitate quick checking, not for publication quality graphs.
+#' @param plot create a PDF with plots in the working directory if \code{TRUE} (the default). The IDs are used as plot names. The plots are only intended to facilitate quick checking, not for publication quality graphs.
 #' @param select deprecated; please use function \code{\link{selectfluxes}}.
 #' @param maxiter see \code{\link{nls.control}}
 #' @param \dots further parameters
@@ -95,7 +95,7 @@
 #' } 
 #' 
 #' @import data.table
-#' @importFrom grDevices png dev.off
+#' @importFrom grDevices pdf dev.off dev.cur
 #' @importFrom graphics layout plot.new legend par
 #' @importFrom stats setNames
 #' @export
@@ -104,6 +104,11 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
                        methods = c("linear", "robust linear", "HMR", "NDFE"),
                        k_HMR = log(1.5), k_NDFE = log(0.01), verbose = TRUE,
                        plot = TRUE, select, maxiter = 100, ...) {
+  
+  #close pdf device
+  on.exit({
+    if (plot && exists("curdev") && curdev == dev.cur()) invisible(dev.off(which = curdev))
+  })
   
   stopifnot(is.data.frame(dat))
   stopifnot(all(lengths(list(.V, .A, .times, .C)) == 1L))
@@ -114,12 +119,26 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
   
   checkInput(dat, .id, .V, .A, .times, .C)
   
-  #create dir for plots
+  #create and open PDF file for plots
   if (plot) {
-    #create folder /pics in working directory if it doesn't exist
-    mainDir <- getwd()
-    subDir <- "pics"
-    dir.create(file.path(mainDir, subDir), showWarnings = FALSE)  
+    pdf(file = sprintf("gasfluxes_plots_%s.pdf", format(Sys.time(), "%Y%m%d_%H%M%S")),
+        paper = "default", width = 0, height = 0,
+        )
+    
+    curdev <- dev.cur()
+    
+    layout(matrix(1:6, ncol = 2, byrow = TRUE))
+      cols <- c("linear" = "black", "robust linear" = "green",
+                "HMR" = "red", "original HMR" = "yellow",
+                "NDFE" = "blue")
+      ltys <- c("linear" = 1, "robust linear" = 2,
+                "HMR" = 1, "original HMR" = 2,
+                "NDFE" = 1)
+      
+      plot.new()
+      legend("center", legend = methods, col = cols[methods], lty = ltys[methods],
+             cex = 1.5)
+
   }
   
   
@@ -144,11 +163,6 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
     .ID <- do.call(paste, c(mget(.id), sep = "_"))[1]
     #plot for each ID
     if (..plot) {
-      png(filename = paste0(paste(file.path(mainDir, subDir), .ID, sep = "/"), ".png"),
-          width = 600, height = 480, units = "px", pointsize = 12)
-      
-      
-      layout(t(c(1, 2)), widths = c(3, 1))
       plot(get(.times), get(.C), pch = 16,
            xlab = "time", ylab = "concentration", main = .ID)
     }
@@ -158,19 +172,7 @@ gasfluxes <- function (dat, .id = "ID", .V = "V", .A = "A", .times = "time", .C 
         lapply(funs, callFun, .t=get(.times), .C=get(.C), .A=get(.A)[1], .V=get(.V)[1], .ID=.ID, verbose=verbose, plot = plot), 
         make.names(names(funs))),
       recursive=F) 
-    if (..plot) {
-      cols <- c("linear" = "black", "robust linear" = "green",
-                "HMR" = "red", "original HMR" = "yellow",
-                "NDFE" = "blue")
-      ltys <- c("linear" = 1, "robust linear" = 2,
-                "HMR" = 1, "original HMR" = 2,
-                "NDFE" = 1)
-      par(mar = rep(0.1, 4))
-      plot.new()
-      
-      legend("center", legend = methods, col = cols[methods], lty = ltys[methods])
-      dev.off()
-    }
+
     tmp
   },   
   by=.id]
