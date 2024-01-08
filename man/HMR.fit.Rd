@@ -53,7 +53,7 @@ A list of
 Fit the HMR model using the Golub-Pereyra algorithm for partially linear least-squares models.
 }
 \details{
-The HMR model (Pedersen et al., 2010) is \eqn{C(t)=\phi+f_0 \frac{e^{-\kappa t}}{-\kappa V/A}}{C(t) = \phi + f0 exp(-\kappa t)/(-\kappa V/A)}.
+The HMR model (Pedersen et al., 2010) is \eqn{C(t)=\phi+f_0 \frac{e^{-\kappa t}}{-\kappa \frac{V}{A}}}{C(t) = \phi + f0 exp(-\kappa t)/(-\kappa V/A)}.
 To ensure the lower bound \eqn{\kappa > 0}, the substitution \eqn{\kappa = e^k}{\kappa = exp(k)} is used. The resulting reparameterized model is then 
 fit using \code{\link{nls}} with \code{algorithm = "plinear"}. This is computationally more efficient than the manual implementation in the HMR package and results 
 in almost identical flux values. Flux standard errors and p-values differ strongly from those reported by the HMR package <= version 0.3.1, 
@@ -62,7 +62,7 @@ but are equal to those reported by later versions.
 The default starting value \eqn{k = log(\kappa)} assumes that time is in hours. If you use a different time unit, you should adjust it accordingly.
 
 There have been demands to return the initial concentration as predicted by the model as this is useful for checking plausibility. However, 
-this can be easily calculated from the parameters and the equation of the model by setting t = 0, i.e., \eqn{C_0=\phi+f_0}{C0 = \phi + f0}.
+this can be easily calculated from the parameters and the equation of the model by setting t = 0, i.e., \eqn{C_0=\phi-\frac{f_0}{\kappa \frac{V}{A}}}{C0 = \phi - f0/(\kappa V/A)}.
 
 Note that \code{nls} is used internally and thus this function should not be used with artificial "zero-residual" data.
 }

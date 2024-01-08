@@ -1,3 +1,6 @@
+### Changes in v0.6-2
+Fixed an embarrassing maths error in the documentation.
+
 ### Changes in v0.6
 
 #### Minor changes
