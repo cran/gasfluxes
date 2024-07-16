@@ -1,13 +1,11 @@
 Package: gasfluxes
 Type: Package
 Title: Greenhouse Gas Flux Calculation from Chamber Measurements
-Version: 0.6-2
-Date: 2024-01-05
+Version: 0.6-4
+Date: 2024-07-16
 Authors@R: c(person("Roland", "Fuss", role = c("aut", "cre"),
          email = "roland.fuss@thuenen.de"),
          person("Roman", "Hueppi", role = c("ctb")))
-Maintainer: Roland Fuss <roland.fuss@thuenen.de>
-Contact: Roland Fuss <roland.fuss@thuenen.de>
 Description: Functions for greenhouse gas flux calculation from chamber
     measurements.
 URL: https://git-dmz.thuenen.de/fuss/gasfluxes
@@ -17,11 +15,13 @@ Imports: sfsmisc, data.table (>= 1.14.8), MASS, stats, graphics,
         grDevices
 Suggests: testthat, knitr, rmarkdown
 LazyData: true
+Encoding: UTF-8
 VignetteBuilder: knitr, rmarkdown
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2024-01-05 09:03:12 UTC; fuss
+Packaged: 2024-07-16 05:45:03 UTC; fuss
 Author: Roland Fuss [aut, cre],
   Roman Hueppi [ctb]
+Maintainer: Roland Fuss <roland.fuss@thuenen.de>
 Repository: CRAN
-Date/Publication: 2024-01-08 10:40:07 UTC
+Date/Publication: 2024-07-16 06:00:02 UTC

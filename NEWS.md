@@ -1,3 +1,6 @@
+### Changes in v0.6-4
+Fixed for CRAN note (regarding a documentation link).
+
 ### Changes in v0.6-2
 Fixed an embarrassing maths error in the documentation.
 

@@ -51,7 +51,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -378,15 +378,16 @@ file (e.g., as exported by Excel):</p>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>fluxMeas <span class="ot">&lt;-</span> fluxMeas[ID <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;ID6&quot;</span>,<span class="st">&quot;ID11&quot;</span>)]</span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>fluxMeas</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt;      ID        V A      time         C</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; 1:  ID6 0.535125 1 0.0000000 0.3241982</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; 2:  ID6 0.535125 1 0.3333333 0.3838311</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; 3:  ID6 0.535125 1 0.6666667 0.3623941</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; 4:  ID6 0.535125 1 1.0000000 0.5067303</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; 5: ID11 0.550000 1 0.0000000 0.3337777</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; 6: ID11 0.550000 1 0.3333333 0.4410218</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt; 7: ID11 0.550000 1 0.6666667 0.5080499</span></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; 8: ID11 0.550000 1 1.0000000 0.5417371</span></span></code></pre></div>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt;        ID        V     A      time         C</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;    &lt;char&gt;    &lt;num&gt; &lt;int&gt;     &lt;num&gt;     &lt;num&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; 1:    ID6 0.535125     1 0.0000000 0.3241982</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; 2:    ID6 0.535125     1 0.3333333 0.3838311</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; 3:    ID6 0.535125     1 0.6666667 0.3623941</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; 4:    ID6 0.535125     1 1.0000000 0.5067303</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; 5:   ID11 0.550000     1 0.0000000 0.3337777</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt; 6:   ID11 0.550000     1 0.3333333 0.4410218</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; 7:   ID11 0.550000     1 0.6666667 0.5080499</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt; 8:   ID11 0.550000     1 1.0000000 0.5417371</span></span></code></pre></div>
 <p>The <code>ID</code> column must be a unique identifier for each flux
 measurement, hence the same value for all the concentration-time points
 that belong to the same flux. Column <code>V</code> stands for the
@@ -423,24 +424,30 @@ function to calculate the fluxes:</p>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; ID11: rlm fit successful</span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; ID11: HMR fit successful</span></span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>flux.results</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;      ID linear.f0 linear.f0.se linear.f0.p linear.C0 linear.AIC linear.AICc</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 1:  ID6 0.0844683   0.03531910  0.13923269 0.3153645  -9.516839         Inf</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 2: ID11 0.1139995   0.01920685  0.02723196 0.3525107 -14.609437         Inf</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt;    linear.RSE  linear.r linear.diagnostics robust.linear.f0 robust.linear.f0.se</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 1: 0.04919468 0.8607673                          0.09719292         0.002805431</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 2: 0.02602898 0.9727680                          0.11399952         0.019206850</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt;    robust.linear.f0.p robust.linear.C0 robust.linear.weights</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; 1:       0.0006741157        0.3232908           1|1|0.033|1</span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; 2:       0.0272319550        0.3525107               1|1|1|1</span></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt;    robust.linear.diagnostics    HMR.f0  HMR.f0.se   HMR.f0.p HMR.kappa  HMR.phi</span></span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; 1:                                  NA         NA         NA        NA       NA</span></span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; 2:                           0.2332107 0.01194175 0.03257022  1.628399 0.593832</span></span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt;      HMR.AIC HMR.AICc     HMR.RSE</span></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt; 1:        NA       NA          NA</span></span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; 2: -33.15832       NA 0.002821234</span></span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt;                                                    HMR.diagnostics</span></span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; 1: Missing value or an infinity produced when evaluating the model</span></span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt; 2:</span></span></code></pre></div>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;        ID linear.f0 linear.f0.se linear.f0.p linear.C0 linear.AIC linear.AICc</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;    &lt;char&gt;     &lt;num&gt;        &lt;num&gt;       &lt;num&gt;     &lt;num&gt;      &lt;num&gt;       &lt;num&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 1:    ID6 0.0844683   0.03531910  0.13923269 0.3153645  -9.516839         Inf</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 2:   ID11 0.1139995   0.01920685  0.02723196 0.3525107 -14.609437         Inf</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;    linear.RSE  linear.r linear.diagnostics robust.linear.f0 robust.linear.f0.se</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt;         &lt;num&gt;     &lt;num&gt;             &lt;char&gt;            &lt;num&gt;               &lt;num&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 1: 0.04919468 0.8607673                          0.09719292         0.002805431</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; 2: 0.02602898 0.9727680                          0.11399952         0.019206850</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt;    robust.linear.f0.p robust.linear.C0 robust.linear.weights</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt;                 &lt;num&gt;            &lt;num&gt;                &lt;char&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; 1:       0.0006741157        0.3232908           1|1|0.033|1</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; 2:       0.0272319550        0.3525107               1|1|1|1</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt;    robust.linear.diagnostics    HMR.f0  HMR.f0.se   HMR.f0.p HMR.kappa  HMR.phi</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt;                       &lt;char&gt;     &lt;num&gt;      &lt;num&gt;      &lt;num&gt;     &lt;num&gt;    &lt;num&gt;</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; 1:                                  NA         NA         NA        NA       NA</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; 2:                           0.2332107 0.01194175 0.03257022  1.628399 0.593832</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt;      HMR.AIC HMR.AICc     HMR.RSE</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt;        &lt;num&gt;    &lt;num&gt;       &lt;num&gt;</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#&gt; 1:        NA       NA          NA</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#&gt; 2: -33.15832       NA 0.002821234</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="co">#&gt;                                                    HMR.diagnostics</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="co">#&gt;                                                             &lt;char&gt;</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="co">#&gt; 1: Missing value or an infinity produced when evaluating the model</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="co">#&gt; 2:</span></span></code></pre></div>
 <p>The output of <code>gasfluxes</code> contains the estimate of the
 initial flux (<code>f0</code>) for each method chosen
 (<code>linear</code>, <code>robust linear</code> and <code>HMR</code> in
@@ -501,31 +508,39 @@ final concentration time point of the individual chamber measurement. To
 apply the <code>kappa.max</code> selection to your calculated fluxes use
 the <code>selectfluxes</code> function the following way:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">selectfluxes</span>(flux.results, <span class="at">select =</span> <span class="st">&quot;kappa.max&quot;</span>, <span class="at">f.detect =</span> <span class="fl">0.031</span>, <span class="at">t.meas =</span> <span class="dv">1</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt;      ID linear.f0 linear.f0.se linear.f0.p linear.C0 linear.AIC linear.AICc</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; 1:  ID6 0.0844683   0.03531910  0.13923269 0.3153645  -9.516839         Inf</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; 2: ID11 0.1139995   0.01920685  0.02723196 0.3525107 -14.609437         Inf</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;    linear.RSE  linear.r linear.diagnostics robust.linear.f0 robust.linear.f0.se</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; 1: 0.04919468 0.8607673                          0.09719292         0.002805431</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; 2: 0.02602898 0.9727680                          0.11399952         0.019206850</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;    robust.linear.f0.p robust.linear.C0 robust.linear.weights</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; 1:       0.0006741157        0.3232908           1|1|0.033|1</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 2:       0.0272319550        0.3525107               1|1|1|1</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt;    robust.linear.diagnostics    HMR.f0  HMR.f0.se   HMR.f0.p HMR.kappa  HMR.phi</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; 1:                                  NA         NA         NA        NA       NA</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; 2:                           0.2332107 0.01194175 0.03257022  1.628399 0.593832</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;      HMR.AIC HMR.AICc     HMR.RSE</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; 1:        NA       NA          NA</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; 2: -33.15832       NA 0.002821234</span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;                                                    HMR.diagnostics kappa.max</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; 1: Missing value or an infinity produced when evaluating the model  2.724784</span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; 2:                                                                  3.677404</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt;          flux     flux.se       flux.p        method</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; 1: 0.09719292 0.002805431 0.0006741157 robust linear</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt; 2: 0.23321066 0.011941753 0.0325702174           HMR</span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>flux.results[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">26</span><span class="sc">:</span><span class="dv">30</span>)]</span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt;      ID kappa.max       flux     flux.se       flux.p        method</span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; 1:  ID6  2.724784 0.09719292 0.002805431 0.0006741157 robust linear</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt; 2: ID11  3.677404 0.23321066 0.011941753 0.0325702174           HMR</span></span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt;        ID linear.f0 linear.f0.se linear.f0.p linear.C0 linear.AIC linear.AICc</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;    &lt;char&gt;     &lt;num&gt;        &lt;num&gt;       &lt;num&gt;     &lt;num&gt;      &lt;num&gt;       &lt;num&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; 1:    ID6 0.0844683   0.03531910  0.13923269 0.3153645  -9.516839         Inf</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; 2:   ID11 0.1139995   0.01920685  0.02723196 0.3525107 -14.609437         Inf</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;    linear.RSE  linear.r linear.diagnostics robust.linear.f0 robust.linear.f0.se</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt;         &lt;num&gt;     &lt;num&gt;             &lt;char&gt;            &lt;num&gt;               &lt;num&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; 1: 0.04919468 0.8607673                          0.09719292         0.002805431</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; 2: 0.02602898 0.9727680                          0.11399952         0.019206850</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt;    robust.linear.f0.p robust.linear.C0 robust.linear.weights</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt;                 &lt;num&gt;            &lt;num&gt;                &lt;char&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; 1:       0.0006741157        0.3232908           1|1|0.033|1</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; 2:       0.0272319550        0.3525107               1|1|1|1</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;    robust.linear.diagnostics    HMR.f0  HMR.f0.se   HMR.f0.p HMR.kappa  HMR.phi</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;                       &lt;char&gt;     &lt;num&gt;      &lt;num&gt;      &lt;num&gt;     &lt;num&gt;    &lt;num&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; 1:                                  NA         NA         NA        NA       NA</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt; 2:                           0.2332107 0.01194175 0.03257022  1.628399 0.593832</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt;      HMR.AIC HMR.AICc     HMR.RSE</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt;        &lt;num&gt;    &lt;num&gt;       &lt;num&gt;</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; 1:        NA       NA          NA</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; 2: -33.15832       NA 0.002821234</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt;                                                    HMR.diagnostics kappa.max</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt;                                                             &lt;char&gt;     &lt;num&gt;</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt; 1: Missing value or an infinity produced when evaluating the model  2.724784</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; 2:                                                                  3.677404</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt;          flux     flux.se       flux.p        method</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt;         &lt;num&gt;       &lt;num&gt;        &lt;num&gt;        &lt;char&gt;</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; 1: 0.09719292 0.002805431 0.0006741157 robust linear</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; 2: 0.23321066 0.011941753 0.0325702174           HMR</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>flux.results[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">26</span><span class="sc">:</span><span class="dv">30</span>)]</span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt;        ID kappa.max       flux     flux.se       flux.p        method</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt;    &lt;char&gt;     &lt;num&gt;      &lt;num&gt;       &lt;num&gt;        &lt;num&gt;        &lt;char&gt;</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt; 1:    ID6  2.724784 0.09719292 0.002805431 0.0006741157 robust linear</span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="co">#&gt; 2:   ID11  3.677404 0.23321066 0.011941753 0.0325702174           HMR</span></span></code></pre></div>
 <p>This appends the columns shown above with the selected and
 recommanded <code>flux</code> estimate and its <code>method</code>
 used.</p>

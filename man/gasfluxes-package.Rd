@@ -18,3 +18,20 @@ The wrapper function for convenient flux calculation is
 \item \code{\link{rlin.fit}}: A simple linear model fit using robust regression.
 }
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://git-dmz.thuenen.de/fuss/gasfluxes}
+}
+
+}
+\author{
+\strong{Maintainer}: Roland Fuss \email{roland.fuss@thuenen.de}
+
+Other contributors:
+\itemize{
+  \item Roman Hueppi [contributor]
+}
+
+}
+\keyword{internal}

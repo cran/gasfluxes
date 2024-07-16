@@ -36,7 +36,7 @@ A list of
 Fit a linear model to concentration - time data using robust methods.
 }
 \details{
-This is basically a wrapper of \code{\link{rlm}} using the Huber M estimator. This function never weights the first or last time point with zero with very few data points. However, there might exist "better" robust regression methods for flux estimation.
+This is basically a wrapper of \code{\link[MASS]{rlm}} using the Huber M estimator. This function never weights the first or last time point with zero with very few data points. However, there might exist "better" robust regression methods for flux estimation.
 }
 \examples{
 #a single fit

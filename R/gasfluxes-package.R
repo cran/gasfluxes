@@ -12,7 +12,6 @@
 #' \item \code{\link{rlin.fit}}: A simple linear model fit using robust regression.
 #' }
 #'
-#' @docType package
-#' @name gasfluxes-package
+#' @keywords internal 
 #' @aliases gasfluxes-package
-NULL
+"_PACKAGE"
