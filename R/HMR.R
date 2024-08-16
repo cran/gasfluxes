@@ -83,7 +83,7 @@ HMR.fit <- function (t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE, p
     stopifnot(length(t) > 3)
     fit <- withWarnings(nls(C ~ cbind(1, exp(-exp(k)*t)/(-exp(k)*V/A)), 
                start= list(k=k), algorithm = "plinear",
-               control=nls.control(maxiter=maxiter, minFactor=1e-10)))
+               control=nls.control(maxiter=maxiter, minFactor=1e-10, scaleOffset = 1)))
     w <- if (is.null(fit$warnings)) "" else fit$warnings[[1]]$message
     fit <- fit$value
     fitsum <- withWarnings(summary(fit))
@@ -106,6 +106,7 @@ HMR.fit <- function (t, C, A = 1, V, serie = "", k = log(1.5), verbose = TRUE, p
       AICc = aicc(fit),
       RSE = fitsum$sigma,
       diagnostics = w)
+    if (res$f0.p > (1 - .Machine$double.neg.eps)) stop("Dubious fit (extreme standard error)")
     if (verbose) message(serie, if (w == "") ": HMR fit successful" else ": HMR fit warning")
     res
   },

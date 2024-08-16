@@ -40,29 +40,24 @@ test_that("robust linear regression gives expected result", {
 test_that("HMR regression gives expected result", {
   skip_on_cran() #slightly different SE/p value on winbuilder
                  #doesn't return NA on winbuilder
+  
   t <- c(0, 1/3, 2/3, 1, 1.2, 1.3)
   C <- c(320, 341, 352, 359, 360, 360)
   fit <- HMR.fit(t, C, 1, 0.3, "a", verbose = FALSE)
   
-  expect_equal(fit, list(f0 = 26.1229339419655, f0.se = 1.60625294868361, f0.p = 0.000505786166225468, 
+  expect_equal(fit, list(f0 = 26.1229339419655, f0.se = 1.60625294868361, f0.p = 0.000505786166225468,
                          kappa = 1.97015450227329, phi = 364.122024254071, AIC = 17.4284243644314, 
                          AICc = 57.4284243644314, RSE = 0.750764759562218, diagnostics = ""), tolerance = 1e-7)
  
   C[2] <- 500
   fit <- HMR.fit(t, C, 1, 0.3, "a", verbose = FALSE)
-  expect_equal(fit, structure(list(f0 = NA_real_, f0.se = NA_real_, f0.p = NA_real_, 
-                                   kappa = NA_real_, phi = NA_real_, AIC = NA_real_, AICc = NA_real_, 
-                                   RSE = NA_real_, diagnostics = "singular gradient"), 
-                              .Names = c("f0", "f0.se", "f0.p", "kappa", "phi", "AIC", "AICc", "RSE", "diagnostics"
-                                   )))
+  expect_equal(fit$diagnostics, "singular gradient")
   
+  t <- c(0, 1/3, 2/3, 1)
   C <- 320 + 0:3 * 10
   fit <- HMR.fit(t, C, 1, 0.3, "a", verbose = FALSE)
-  expect_equal(fit, structure(list(f0 = NA_real_, f0.se = NA_real_, f0.p = NA_real_, 
-                                   kappa = NA_real_, phi = NA_real_, AIC = NA_real_, AICc = NA_real_, 
-                                   RSE = NA_real_, diagnostics = "'qr' and 'y' must have the same number of rows"), 
-                              .Names = c("f0", "f0.se", "f0.p", "kappa", "phi", "AIC", "AICc", "RSE", "diagnostics"
-                                   )))
+  expect_equal(fit$diagnostics, "Missing value or an infinity produced when evaluating the model")
+  
 })
 
 test_that("NDFE regression gives expected result", {
