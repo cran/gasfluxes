@@ -1,5 +1,5 @@
 ---
-title: "How to calculate gasfluxes"
+title: "Introduction to gasfluxes"
 author: "Roman Hüppi, Roland Fuß"
 date: "2018-08-04"
 output: rmarkdown::html_vignette

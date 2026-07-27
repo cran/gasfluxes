@@ -8,12 +8,12 @@ test_that("agg.fluxes returns expected values", {
   expect_equal(agg.fluxes(fluxes, datetimes), structure(list(flux = 75238.9688519877, 
                                                              from = structure(1451023200, class = c("POSIXct", "POSIXt"), tzone = "GMT"), 
                                                              to = structure(1451844000, class = c("POSIXct", "POSIXt"), tzone = "GMT")), 
-                                                        .Names = c("flux", "from", "to"), row.names = c(NA, -1L), class = "data.frame"))
+                                                        names = c("flux", "from", "to"), row.names = c(NA, -1L), class = "data.frame"))
   
   fluxes[5] <- NA
   expect_equal(agg.fluxes(fluxes, datetimes), structure(list(flux = 75048.311970754, 
                                                              from = structure(1451023200, class = c("POSIXct", "POSIXt"), tzone = "GMT"), 
                                                              to = structure(1451844000, class = c("POSIXct", "POSIXt"), tzone = "GMT")), 
-                                                        .Names = c("flux", "from", "to"), row.names = c(NA, -1L), class = "data.frame"))
+                                                        names = c("flux", "from", "to"), row.names = c(NA, -1L), class = "data.frame"))
   
 })

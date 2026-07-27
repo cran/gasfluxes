@@ -1,3 +1,6 @@
+### Changes in v0.7-2
+In tests: Changed deprecated ".Names"" to "names" in calls to structure  
+
 ### Changes in v0.7
 Bugfix: Whether an HMR fit was successful with difficult input data was platform dependent. Fits are now reported as failed with error message "Dubious fit (extreme standard error)" if the p value of the flux is > (1 - .Machine$double.neg.eps), which ensures that fits with extreme standard error of the flux estimate (in particular SE = Inf) are not reported anymore. This impacts the result of the recommended simulation to determine *f.detect* and thus the flux selection in *selectfluxes* on some platforms, especially on Windows systems. *fdetect* will be lower leading to successful HMR fits being more likely to be selected but there will also be less successful but dubious HMR fits. 
 

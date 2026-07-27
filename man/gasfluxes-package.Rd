@@ -28,6 +28,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Roland Fuss \email{roland.fuss@thuenen.de} (\href{https://orcid.org/0000-0002-0274-0809}{ORCID})
 
+Authors:
+\itemize{
+  \item Roland Fuss \email{roland.fuss@thuenen.de} (\href{https://orcid.org/0000-0002-0274-0809}{ORCID})
+}
+
 Other contributors:
 \itemize{
   \item Roman Hueppi (\href{https://orcid.org/0000-0001-8815-7835}{ORCID}) [contributor]

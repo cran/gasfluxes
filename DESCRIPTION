@@ -1,8 +1,7 @@
 Package: gasfluxes
 Type: Package
 Title: Greenhouse Gas Flux Calculation from Chamber Measurements
-Version: 0.7
-Date: 2024-08-16
+Version: 0.7-2
 Authors@R: c(person("Roland", "Fuss", role = c("aut", "cre"),
          email = "roland.fuss@thuenen.de", comment = c(ORCID = "0000-0002-0274-0809")),
          person("Roman", "Hueppi", role = c("ctb"), comment = c(ORCID = "0000-0001-8815-7835")))
@@ -17,11 +16,11 @@ Suggests: testthat, knitr, rmarkdown
 LazyData: true
 Encoding: UTF-8
 VignetteBuilder: knitr, rmarkdown
-RoxygenNote: 7.3.2
+Config/roxygen2/version: 8.0.0
 NeedsCompilation: no
-Packaged: 2024-08-16 07:12:50 UTC; fuss
-Author: Roland Fuss [aut, cre] (<https://orcid.org/0000-0002-0274-0809>),
-  Roman Hueppi [ctb] (<https://orcid.org/0000-0001-8815-7835>)
+Packaged: 2026-07-27 08:47:42 UTC; fuss
+Author: Roland Fuss [aut, cre] (ORCID: <https://orcid.org/0000-0002-0274-0809>),
+  Roman Hueppi [ctb] (ORCID: <https://orcid.org/0000-0001-8815-7835>)
 Maintainer: Roland Fuss <roland.fuss@thuenen.de>
 Repository: CRAN
-Date/Publication: 2024-08-16 08:50:02 UTC
+Date/Publication: 2026-07-27 09:20:02 UTC
